@@ -1,0 +1,26 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Settings\TowerTreeSettings.xml">
+    <Files>
+      <File FileName="Assets\Scripts\Projectiles\ArcingProjectile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TitleMenuScript.cs" Line="120" Column="40" />
+      <File FileName="Assets\LevelConfigurations\Level1.xml" Line="11" Column="29" />
+      <File FileName="Assets\Scripts\HealSkillScript.cs" Line="33" Column="4" />
+      <File FileName="Assets\Scripts\BaseScript.cs" Line="17" Column="3" />
+      <File FileName="Assets\Scripts\CameraScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CreepScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CreepWaveObjects.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelWavesLoadOut.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerMenuScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UtilityFunctions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WaveScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WayPointScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Settings\TowerTreeSettings.xml" Line="8" Column="38" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

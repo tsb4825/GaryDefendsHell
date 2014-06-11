@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TowerTree>
+  <Base Name="Homing" GoldCost="100">
+  	<Child Name="Normal" GoldCost="100"/>
+  </Base>
+  <Base Name="AOE" GoldCost="110">
+  </Base>
+  <Base Name="Normal" GoldCost="120">
+  </Base>
+</TowerTree>
