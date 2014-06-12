@@ -48,6 +48,7 @@ public class ArcingProjectile : ProjectileScript
 								transform.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 								RemoveProjectileTime = Time.time + ProjectileAliveTime;
 								transform.position = new Vector3 (transform.position.x, transform.position.y, 0);
+								// do raycast and remove collider
 						}
 				} else {
 						if (Time.time >= RemoveProjectileTime) {
@@ -58,38 +59,30 @@ public class ArcingProjectile : ProjectileScript
 
 	private void CalculateProjectilePath()
 	{
-		// get anticpated frames to target
 		Vector3 targetLocation = Target.position;
 		Vector3 distanceToTarget = targetLocation - transform.position;
 		
 		// Guess location when reaching target
-		float anticipatedFramesToTarget = distanceToTarget.sqrMagnitude / (ProjectileSpeed * Time.deltaTime);
+		float anticipatedFramesToTarget = distanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
 		Transform targetsTarget = Target.GetComponent<CreepScript> ().WayPointTarget;
 		bool IsFighting = Target.GetComponent<CreepScript> ().IsFighting;
 		bool IsMovingTowardUnit = Target.GetComponent<CreepScript> ().IsMovingTowardFighter;
 		float TargetSpeed = Target.GetComponent<CreepScript> ().UnitSpeed;
 		Transform targetsFightingTarget = Target.GetComponent<CreepScript> ().FightingTarget;
-
-		// get target velocity
-
-		// calculate target location
-
-
-
 		
 		if (!IsFighting) {
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsTarget.position, TargetSpeed * anticipatedFramesToTarget * Time.deltaTime);
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target,targetsTarget.position)).normalized * anticipatedFramesToTarget * TargetSpeed * Time.deltaTime;
 			// adjust by time off due to not knowing location of target after time
 			Vector3 newDistanceToTarget = targetLocation - transform.position;
-			float newAnticipatedFramesToTarget = newDistanceToTarget.sqrMagnitude / (ProjectileSpeed * Time.deltaTime);
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsTarget.position, TargetSpeed * newAnticipatedFramesToTarget * Time.deltaTime);
+			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target, targetsTarget.position)).normalized * newAnticipatedFramesToTarget * TargetSpeed * Time.deltaTime;
 			UtilityFunctions.DebugMessage ("Anticipated Frames to target: " + newAnticipatedFramesToTarget);
 		} else if (IsFighting && IsMovingTowardUnit) {
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * anticipatedFramesToTarget * Time.deltaTime);
+			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * anticipatedFramesToTarget * Time.deltaTime * 5);
 			// adjust by time off due to not knowing location of target after time
 			Vector3 newDistanceToTarget = targetLocation - transform.position;
-			float newAnticipatedFramesToTarget = newDistanceToTarget.sqrMagnitude / (ProjectileSpeed * Time.deltaTime);
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * newAnticipatedFramesToTarget * Time.deltaTime);
+			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
+			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * newAnticipatedFramesToTarget * Time.deltaTime * 5);
 			UtilityFunctions.DebugMessage ("Anticipated Frames to target: " + newAnticipatedFramesToTarget);		
 		}
 		GuessedTargetLocation = targetLocation;
@@ -101,7 +94,7 @@ public class ArcingProjectile : ProjectileScript
 		distanceToTarget = targetLocation + transform.position;
 		
 		MidPoint = distanceToTarget * .5f;
-		MidPointDistance = Vector3.Distance (targetLocation, transform.position) / 2f;
+		MidPointDistance = (targetLocation - transform.position).sqrMagnitude / 4f;
 		UtilityFunctions.DebugMessage ("Target: " + distanceToTarget);
 		UtilityFunctions.DebugMessage ("Distance To Target: " + Vector3.Distance (targetLocation, transform.position));
 		UtilityFunctions.DebugMessage ("Mid Point: " + MidPoint);
@@ -109,6 +102,7 @@ public class ArcingProjectile : ProjectileScript
 		
 		UtilityFunctions.DebugMessage ("Arching Projectile velocity: " + (targetLocation - transform.position).normalized * ProjectileSpeed);
 		transform.GetComponent<Rigidbody2D> ().velocity = (targetLocation - transform.position).normalized * ProjectileSpeed;
+		UtilityFunctions.DebugMessage("Velocity: " + transform.GetComponent<Rigidbody2D> ().velocity.magnitude);
 		UtilityFunctions.DebugMessage ("Anticipated Time to target: " + distanceToTarget.magnitude / transform.GetComponent<Rigidbody2D> ().velocity.magnitude);
 		IsMoving = true;
 		NeedToCalculateProjectilePath = false;
