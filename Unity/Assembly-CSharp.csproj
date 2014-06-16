@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Affliction.cs" />
      <Compile Include="Assets\Scripts\BaseScript.cs" />
      <Compile Include="Assets\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Scripts\CreepScript.cs" />
@@ -58,6 +59,7 @@
      <Compile Include="Assets\Scripts\Projectiles\ConstantAttackProjectileScript.cs" />
      <Compile Include="Assets\Scripts\Projectiles\HomingProjectileScript.cs" />
      <Compile Include="Assets\Scripts\Projectiles\ProjectileScript.cs" />
+     <Compile Include="Assets\Scripts\SpeedBoostScript.cs" />
      <Compile Include="Assets\Scripts\TitleMenuScript.cs" />
      <Compile Include="Assets\Scripts\Towers\AOETowerScript.cs" />
      <Compile Include="Assets\Scripts\Towers\ArcingProjectileTower.cs" />

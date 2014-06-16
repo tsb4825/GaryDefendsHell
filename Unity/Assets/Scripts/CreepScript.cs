@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class CreepScript : MonoBehaviour
 {
@@ -23,6 +25,12 @@ public class CreepScript : MonoBehaviour
 		public Texture2D healthBarEmpty;
 		public Texture2D healthBarFull;
 		public GUIStyle HealthBar;
+		public List<Affliction> Afflictions;
+
+		void Awake ()
+		{
+				Afflictions = new List<Affliction> ();
+		}
 
 		void OnGUI ()
 		{
@@ -56,7 +64,11 @@ public class CreepScript : MonoBehaviour
 						if ((UtilityFunctions.UseUnitZPosition (transform, transform.position) - UtilityFunctions.UseUnitZPosition (transform, FightingTarget.position)).sqrMagnitude > DistanceBetweenMeleeFighters) {
 								UtilityFunctions.DebugMessage ("Moving towards melee target.");
 								IsMovingTowardFighter = true;
-								transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (FightingTarget.position), Time.deltaTime * UnitSpeed);
+								float newUnitSpeed = Afflictions.Any (x => x.AfflictionType == AfflictionTypes.SpeedBoost) 
+									? Afflictions.Where (x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max (x => x.AffectAmount)
+						: 1f;
+				newUnitSpeed *= UnitSpeed;
+								transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (FightingTarget.position), Time.deltaTime * newUnitSpeed);
 						} else {
 								IsMovingTowardFighter = false;
 								Attack ();
@@ -65,8 +77,16 @@ public class CreepScript : MonoBehaviour
 						IsMovingTowardFighter = false;
 						IsFighting = false;
 				} else {
-						transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (WayPointTarget.transform.position), Time.deltaTime * UnitSpeed);
+						float newUnitSpeed = Afflictions.Any (x => x.AfflictionType == AfflictionTypes.SpeedBoost) 
+						? Afflictions.Where (x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max (x => x.AffectAmount)
+						: 1f;
+			newUnitSpeed *= UnitSpeed;
+						if (newUnitSpeed != UnitSpeed)
+				UtilityFunctions.DebugMessage ("Speed Boost - " + newUnitSpeed);
+						transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (WayPointTarget.transform.position), Time.deltaTime * newUnitSpeed);
 				}
+
+				Afflictions.RemoveAll (x => x.EndTime >= Time.time);
 		}
 
 		private void Attack ()
@@ -123,5 +143,10 @@ public class CreepScript : MonoBehaviour
 				if (CurrentHitPoints > MaxHitPoints) {
 						CurrentHitPoints = MaxHitPoints;
 				}
+		}
+
+		public void AddAffliction (AfflictionTypes afflictionType, float duration, float affectAmount)
+		{
+				Afflictions.Add (new Affliction { AfflictionType = afflictionType, EndTime = Time.time + duration, AffectAmount = affectAmount});
 		}
 }
