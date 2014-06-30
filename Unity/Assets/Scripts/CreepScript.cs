@@ -67,8 +67,8 @@ public class CreepScript : MonoBehaviour
 								float newUnitSpeed = Afflictions.Any (x => x.AfflictionType == AfflictionTypes.SpeedBoost) 
 									? Afflictions.Where (x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max (x => x.AffectAmount)
 						: 1f;
-				newUnitSpeed *= UnitSpeed;
-								transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (FightingTarget.position), Time.deltaTime * newUnitSpeed);
+								newUnitSpeed *= UnitSpeed;
+								transform.position += (UseUnitZPosition (FightingTarget.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
 						} else {
 								IsMovingTowardFighter = false;
 								Attack ();
@@ -80,13 +80,11 @@ public class CreepScript : MonoBehaviour
 						float newUnitSpeed = Afflictions.Any (x => x.AfflictionType == AfflictionTypes.SpeedBoost) 
 						? Afflictions.Where (x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max (x => x.AffectAmount)
 						: 1f;
-			newUnitSpeed *= UnitSpeed;
-						if (newUnitSpeed != UnitSpeed)
-				UtilityFunctions.DebugMessage ("Speed Boost - " + newUnitSpeed);
-						transform.position = Vector3.MoveTowards (transform.position, UseUnitZPosition (WayPointTarget.transform.position), Time.deltaTime * newUnitSpeed);
+						newUnitSpeed *= UnitSpeed;
+						Vector3 prevPosition = transform.position;
+						transform.position += (UseUnitZPosition (WayPointTarget.transform.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
 				}
-
-				Afflictions.RemoveAll (x => x.EndTime >= Time.time);
+				Afflictions.RemoveAll (x => x.EndTime <= Time.time);
 		}
 
 		private void Attack ()
@@ -147,6 +145,7 @@ public class CreepScript : MonoBehaviour
 
 		public void AddAffliction (AfflictionTypes afflictionType, float duration, float affectAmount)
 		{
-				Afflictions.Add (new Affliction { AfflictionType = afflictionType, EndTime = Time.time + duration, AffectAmount = affectAmount});
+				UtilityFunctions.DebugMessage ("Current Time: " + Time.time + ", Duration: " + duration + ", EndTime: " + (Time.time + duration));
+				Afflictions.Add (new Affliction { AfflictionType = afflictionType, EndTime = (Time.time + duration), AffectAmount = affectAmount});
 		}
 }

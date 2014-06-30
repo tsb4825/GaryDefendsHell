@@ -8,9 +8,9 @@ public class ArcingProjectile : ProjectileScript
 		public Vector3 MidPoint;
 		public float MidPointDistance;
 		public bool IsMoving;
-		public float MaxAdditionalScale = 10f;
+		public float MaxAdditionalScale;
 		public float RemoveProjectileTime;
-		public float ProjectileAliveTime = .1f;
+		public float ProjectileAliveTime;
 		public int ActualFramesToTarget;
 	public bool NeedToCalculateProjectilePath = true;
 
@@ -43,7 +43,7 @@ public class ArcingProjectile : ProjectileScript
 						transform.position = new Vector3 (transform.position.x, transform.position.y, newScale);
 						if (newScale <= 1) {
 								UtilityFunctions.DebugMessage ("Actual Target Location: " + Target.position);
-				UtilityFunctions.DebugMessage ("Actual Time to Target: " + ActualFramesToTarget);
+				UtilityFunctions.DebugMessage ("Actual Frames to Target: " + ActualFramesToTarget);
 								IsMoving = false;
 								transform.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 								RemoveProjectileTime = Time.time + ProjectileAliveTime;
@@ -71,18 +71,18 @@ public class ArcingProjectile : ProjectileScript
 		Transform targetsFightingTarget = Target.GetComponent<CreepScript> ().FightingTarget;
 		
 		if (!IsFighting) {
-			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target,targetsTarget.position)).normalized * anticipatedFramesToTarget * TargetSpeed * Time.deltaTime;
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target,targetsTarget.position)).normalized * anticipatedFramesToTarget * TargetSpeed * Time.deltaTime + targetLocation;
 			// adjust by time off due to not knowing location of target after time
 			Vector3 newDistanceToTarget = targetLocation - transform.position;
-			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
-			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target, targetsTarget.position)).normalized * newAnticipatedFramesToTarget * TargetSpeed * Time.deltaTime;
+			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime * 2);
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target, targetsTarget.position)).normalized * newAnticipatedFramesToTarget * TargetSpeed * Time.deltaTime + targetLocation;
 			UtilityFunctions.DebugMessage ("Anticipated Frames to target: " + newAnticipatedFramesToTarget);
 		} else if (IsFighting && IsMovingTowardUnit) {
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * anticipatedFramesToTarget * Time.deltaTime * 5);
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target,targetsFightingTarget.position)).normalized * anticipatedFramesToTarget * TargetSpeed * Time.deltaTime + targetLocation;
 			// adjust by time off due to not knowing location of target after time
 			Vector3 newDistanceToTarget = targetLocation - transform.position;
-			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
-			targetLocation = Vector2.MoveTowards (targetLocation, targetsFightingTarget.position, TargetSpeed * newAnticipatedFramesToTarget * Time.deltaTime * 5);
+			float newAnticipatedFramesToTarget = newDistanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime * 2);
+			targetLocation = (targetLocation - UtilityFunctions.UseUnitZPosition (Target, targetsFightingTarget.position)).normalized * newAnticipatedFramesToTarget * TargetSpeed * Time.deltaTime + targetLocation;
 			UtilityFunctions.DebugMessage ("Anticipated Frames to target: " + newAnticipatedFramesToTarget);		
 		}
 		GuessedTargetLocation = targetLocation;
@@ -94,7 +94,7 @@ public class ArcingProjectile : ProjectileScript
 		distanceToTarget = targetLocation + transform.position;
 		
 		MidPoint = distanceToTarget * .5f;
-		MidPointDistance = (targetLocation - transform.position).sqrMagnitude / 4f;
+		MidPointDistance = (targetLocation - transform.position).magnitude / 4f;
 		UtilityFunctions.DebugMessage ("Target: " + distanceToTarget);
 		UtilityFunctions.DebugMessage ("Distance To Target: " + Vector3.Distance (targetLocation, transform.position));
 		UtilityFunctions.DebugMessage ("Mid Point: " + MidPoint);
