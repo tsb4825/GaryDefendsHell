@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class ArcingProjectile : ProjectileScript
 {
@@ -20,24 +21,17 @@ public class ArcingProjectile : ProjectileScript
 						CalculateProjectilePath ();
 				}
 				ActualFramesToTarget += 1;
-				// Scale based on position of arc, and adjust z
-				// going up
+
 				Vector3 unitPositionZeroZ = new Vector3 (transform.position.x, transform.position.y, 0);
 				if (IsMoving && (GuessedTargetLocation - unitPositionZeroZ).sqrMagnitude >= MidPointDistance) {
-						//UtilityFunctions.DebugMessage ("Going up");
 						float distanceToMidPoint = Vector3.Distance (MidPoint, unitPositionZeroZ);
-						//UtilityFunctions.DebugMessage ("Arching Projectile distanceToMidPoint: " + distanceToMidPoint + ", MidPointDistance: " + MidPointDistance);
-						//UtilityFunctions.DebugMessage ("Arching Projectile scale: " + (1f + ((MidPointDistance - distanceToMidPoint) / MidPointDistance * MaxAdditionalScale)));
 						float newScale = 1f + ((MidPointDistance - distanceToMidPoint) / MidPointDistance * MaxAdditionalScale);
 						transform.localScale = new Vector3 (newScale, newScale, 0);
 						transform.position = new Vector3 (transform.position.x, transform.position.y, newScale);
 				}
 		// going down
 		else if (IsMoving) {
-						//UtilityFunctions.DebugMessage ("Going down");
 						float distanceAwayFromMidPoint = Vector3.Distance (unitPositionZeroZ, MidPoint);
-						//UtilityFunctions.DebugMessage ("Arching Projectile distanceAwayFromMidPoint: " + distanceAwayFromMidPoint + ", MidPointDistance: " + MidPointDistance);
-						//UtilityFunctions.DebugMessage ("Arching Projectile scale: " + (1f + ((MidPointDistance - distanceAwayFromMidPoint) / MidPointDistance * MaxAdditionalScale)));
 						float newScale = 1f + ((MidPointDistance - distanceAwayFromMidPoint) / MidPointDistance * MaxAdditionalScale);
 						transform.localScale = new Vector3 (newScale, newScale, 0);
 						transform.position = new Vector3 (transform.position.x, transform.position.y, newScale);
@@ -49,7 +43,15 @@ public class ArcingProjectile : ProjectileScript
 								RemoveProjectileTime = Time.time + ProjectileAliveTime;
 								transform.position = new Vector3 (transform.position.x, transform.position.y, 0);
 								UtilityFunctions.DebugMessage ("Actual projectile hit: " + transform.position);
-								// do raycast and remove collider
+								
+								// hit anything?
+								RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, Vector2.zero);
+								if (hits != null) {
+										foreach (RaycastHit2D hit in hits.Where (x => x.transform.tag == "Enemy")) {
+												hit.transform.GetComponent<CreepScript> ().TakeDamage (Damage);
+										}
+								}
+								Destroy (gameObject);
 						}
 				} else {
 						if (Time.time >= RemoveProjectileTime) {
@@ -64,7 +66,7 @@ public class ArcingProjectile : ProjectileScript
 				Vector3 distanceToTarget = targetLocation - transform.position;
 		
 				// Guess location when reaching target
-				float anticipatedFramesToTarget = distanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime);
+				float anticipatedFramesToTarget = distanceToTarget.magnitude / (ProjectileSpeed * Time.deltaTime * 2);
 				Transform targetsTarget = Target.GetComponent<CreepScript> ().WayPointTarget;
 				bool IsFighting = Target.GetComponent<CreepScript> ().IsFighting;
 				bool IsMovingTowardUnit = Target.GetComponent<CreepScript> ().IsMovingTowardFighter;
@@ -72,7 +74,6 @@ public class ArcingProjectile : ProjectileScript
 				Transform targetsFightingTarget = Target.GetComponent<CreepScript> ().FightingTarget;
 		
 				if (!IsFighting) {
-						UtilityFunctions.DebugMessage ("Direction to target: " + (targetLocation - UtilityFunctions.UseUnitZPosition (Target, targetsTarget.position)).normalized);
 						targetLocation = (UtilityFunctions.UseUnitZPosition (Target, targetsTarget.position) - targetLocation).normalized * anticipatedFramesToTarget * TargetSpeed * Time.deltaTime + targetLocation;
 						// adjust by time off due to not knowing location of target after time
 						Vector3 newDistanceToTarget = targetLocation - transform.position;
@@ -90,22 +91,14 @@ public class ArcingProjectile : ProjectileScript
 				GuessedTargetLocation = targetLocation;
 		
 				UtilityFunctions.DebugMessage ("Guessed Target Location: " + targetLocation);
-				UtilityFunctions.DebugMessage ("Projectile Location: " + transform.position);
 		
 				// adjust direction on new location
 				distanceToTarget = targetLocation - transform.position;
 		
 				MidPoint = distanceToTarget * .5f + transform.position;
 				MidPointDistance = Vector3.Distance (targetLocation, transform.position) / 2f;
-				UtilityFunctions.DebugMessage ("Target: " + distanceToTarget);
-				UtilityFunctions.DebugMessage ("Distance To Target: " + Vector3.Distance (targetLocation, transform.position));
-				UtilityFunctions.DebugMessage ("Mid Point: " + MidPoint);
-				UtilityFunctions.DebugMessage ("Mid Point Distance: " + MidPointDistance);
-		
-				UtilityFunctions.DebugMessage ("Arching Projectile velocity: " + (targetLocation - transform.position).normalized * ProjectileSpeed);
+
 				transform.GetComponent<Rigidbody2D> ().velocity = (targetLocation - transform.position).normalized * ProjectileSpeed;
-				UtilityFunctions.DebugMessage ("Velocity: " + transform.GetComponent<Rigidbody2D> ().velocity.magnitude);
-				UtilityFunctions.DebugMessage ("Anticipated Time to target: " + distanceToTarget.magnitude / transform.GetComponent<Rigidbody2D> ().velocity.magnitude);
 				IsMoving = true;
 				NeedToCalculateProjectilePath = false;
 		}

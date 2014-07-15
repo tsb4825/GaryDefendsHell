@@ -4,22 +4,21 @@ using System.Collections;
 public class PlayerMenuScript : MonoBehaviour {
 	public Transform Angel;
 
+	private const int ButtonWidth = 84;
+	private const int ButtonHeight = 30;
+	private float ButtonX = Screen.width * .8f + (Screen.width * .2f / 2f) - ButtonWidth;
+
 	void OnGUI()
 	{
-		const int buttonWidth = 84;
-		const int buttonHeight = 30;
-		
 		GUI.Box(new Rect(Screen.width * .8f, 0.0f, Screen.width * .2f, Screen.height), "");
-		
-		// Draw a button to start the game
+
 		if (
 			GUI.Button(
-			// Center in X, 2/3 of the height in Y
 			new Rect(
-			Screen.width * .8f + (Screen.width * .2f / 2f) - buttonWidth,
-			30f - (buttonHeight / 2f),
-			buttonWidth,
-			buttonHeight
+			ButtonX,
+			30f - (ButtonHeight / 2f),
+			ButtonWidth,
+			ButtonHeight
 			),
 			"Start Waves"
 			)
@@ -30,12 +29,11 @@ public class PlayerMenuScript : MonoBehaviour {
 
 		if (
 			GUI.Button(
-			// Center in X, 2/3 of the height in Y
 			new Rect(
-			Screen.width * .8f + (Screen.width * .2f / 2f) - buttonWidth,
-			80f - (buttonHeight / 2f),
-			buttonWidth,
-			buttonHeight
+			ButtonX,
+			80f - (ButtonHeight / 2f),
+			ButtonWidth,
+			ButtonHeight
 			),
 			"Send Creep"
 			)
@@ -48,12 +46,11 @@ public class PlayerMenuScript : MonoBehaviour {
 
 		if (
 			GUI.Button(
-			// Center in X, 2/3 of the height in Y
 			new Rect(
-			Screen.width * .8f + (Screen.width * .2f / 2f) - buttonWidth,
-			130f - (buttonHeight / 2f),
-			buttonWidth,
-			buttonHeight
+			ButtonX,
+			130f - (ButtonHeight / 2f),
+			ButtonWidth,
+			ButtonHeight
 			),
 			"Send Player Creep"
 			)
@@ -62,6 +59,21 @@ public class PlayerMenuScript : MonoBehaviour {
 			Transform unit = (Transform)Instantiate (Resources.Load<Transform> ("PlayerAngel"), GameObject.FindGameObjectWithTag ("Base").transform.position, 
 			                                          Quaternion.identity);
 			unit.GetComponent <CreepScript> ().Target = GameObject.FindGameObjectWithTag ("Spawn").transform;
+		}
+
+		if (
+			GUI.Button(
+			new Rect(
+			ButtonX,
+			180f - (ButtonHeight / 2f),
+			ButtonWidth,
+			ButtonHeight
+			),
+			"Pause"
+			)
+			)
+		{
+			Time.timeScale = Time.timeScale == 0 ? 1: 0;
 		}
 	}
 }
