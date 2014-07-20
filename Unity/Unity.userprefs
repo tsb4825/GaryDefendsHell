@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerMenuScript.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ComicCelScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerMenuScript.cs" Line="9" Column="86" />
+      <File FileName="Assets\Scripts\ComicCelScript.cs" Line="11" Column="27" />
+      <File FileName="Assets\Scripts\PlayerScript.cs" Line="17" Column="100" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

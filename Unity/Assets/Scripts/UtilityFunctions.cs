@@ -57,4 +57,9 @@ public static class UtilityFunctions {
 			Debug.Log (message);
 		}
 	}
+
+	public static bool IsCloseEnough(this Vector3 position1, Vector3 position2)
+	{
+		return ((Mathf.Abs(position1.x - position2.x) <= .02f) && (Mathf.Abs (position1.y - position2.y) <= .02f));
+	}
 }

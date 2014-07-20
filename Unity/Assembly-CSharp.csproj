@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Affliction.cs" />
      <Compile Include="Assets\Scripts\BaseScript.cs" />
      <Compile Include="Assets\Scripts\CameraScript.cs" />
+     <Compile Include="Assets\Scripts\ComicCelScript.cs" />
      <Compile Include="Assets\Scripts\CreepScript.cs" />
      <Compile Include="Assets\Scripts\CreepWaveObjects.cs" />
      <Compile Include="Assets\Scripts\HealSkillScript.cs" />
