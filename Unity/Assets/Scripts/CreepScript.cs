@@ -81,7 +81,6 @@ public class CreepScript : MonoBehaviour
 						? Afflictions.Where (x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max (x => x.AffectAmount)
 						: 1f;
 						newUnitSpeed *= UnitSpeed;
-						Vector3 prevPosition = transform.position;
 						transform.position += (UseUnitZPosition (WayPointTarget.transform.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
 				}
 				Afflictions.RemoveAll (x => x.EndTime <= Time.time);
