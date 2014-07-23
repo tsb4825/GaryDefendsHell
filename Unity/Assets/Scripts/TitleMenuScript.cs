@@ -57,7 +57,7 @@ public class TitleMenuScript : MonoBehaviour
 				) {
 						// On Click, load the first level.
 						// "Stage1" is the name of the first scene we created.
-						Application.LoadLevel ("Level1");
+						Application.LoadLevel ("Map");
 				}
 
 				if (

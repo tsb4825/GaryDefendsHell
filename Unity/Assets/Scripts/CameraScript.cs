@@ -4,18 +4,19 @@ using System.Linq;
 
 public class CameraScript : MonoBehaviour
 {
-		public float dragSpeed = 2;
+		public float dragSpeed = .5f;
 		private Vector3 dragOrigin;
 		public float MapWidth;
 		public float MapHeight;
-		public int MaxZoom = 25;
-		public int MinZoom = 50;
-		public float ZoomSpeed = 1f;
-		public float CurrentZoom = 50f;
+		public int MaxZoom = 3;
+		public int MinZoom = 5;
+		public float ZoomSpeed = .5f;
+		public float CurrentZoom = 5f;
 		public float MinX;
 		public float MinY;
 		public float MaxX;
 		public float MaxY;
+	public bool IsZoomEnabled;
 
 		void Start ()
 		{
@@ -38,14 +39,14 @@ public class CameraScript : MonoBehaviour
 		void Update ()
 		{
 				if (GameObject.FindGameObjectsWithTag ("Tower") != null && !GameObject.FindGameObjectsWithTag ("Tower").Any (x => x.GetComponent<Tower> ().IsTowerSelected)) {
-						if (Input.GetAxis ("Mouse ScrollWheel") > 0 && CurrentZoom > MaxZoom) {
+						if (IsZoomEnabled && Input.GetAxis ("Mouse ScrollWheel") > 0 && CurrentZoom > MaxZoom) {
 								CurrentZoom = Mathf.Max (CurrentZoom - ZoomSpeed, MaxZoom);
 								camera.orthographicSize = CurrentZoom;
 								CalculateCameraBounds ();
 						}
 
 						// handle zoom out when on edge of screen		
-						if (Input.GetAxis ("Mouse ScrollWheel") < 0 && CurrentZoom < MinZoom) {
+						if (IsZoomEnabled && Input.GetAxis ("Mouse ScrollWheel") < 0 && CurrentZoom < MinZoom) {
 								CurrentZoom = Mathf.Min (CurrentZoom + ZoomSpeed, MinZoom);
 								camera.orthographicSize = CurrentZoom;
 								CalculateCameraBounds ();
