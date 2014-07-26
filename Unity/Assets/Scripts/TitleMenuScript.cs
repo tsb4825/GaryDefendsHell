@@ -52,7 +52,7 @@ public class TitleMenuScript : MonoBehaviour
 				startButtonSize.x,
 				startButtonSize.y
 				),
-				"Start!"
+				PlayerPrefs.HasKey ("Level1") ? "Continue" : "Start!"
 				)
 				) {
 						// On Click, load the first level.

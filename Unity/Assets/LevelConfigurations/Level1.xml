@@ -27,5 +27,31 @@
       </Swarms>
       <TimeInBetweenNextWave>5</TimeInBetweenNextWave>
     </Wave>
+    <Wave>
+      <Swarms>
+        <Swarm>
+          <Creep>Angel</Creep>
+          <Quantity>4</Quantity>
+          <TimeInBetweenCreeps>0.5</TimeInBetweenCreeps>
+          <SpawnLocation>1</SpawnLocation>
+          <TimeToNextSwarm>3</TimeToNextSwarm>
+        </Swarm>
+        <Swarm>
+          <Creep>AngelHeal</Creep>
+          <Quantity>1</Quantity>
+          <TimeInBetweenCreeps>0.5</TimeInBetweenCreeps>
+          <SpawnLocation>1</SpawnLocation>
+          <TimeToNextSwarm>3</TimeToNextSwarm>
+        </Swarm>
+        <Swarm>
+          <Creep>AngelSpeed</Creep>
+          <Quantity>1</Quantity>
+          <TimeInBetweenCreeps>0.5</TimeInBetweenCreeps>
+          <SpawnLocation>1</SpawnLocation>
+          <TimeToNextSwarm>3</TimeToNextSwarm>
+        </Swarm>
+      </Swarms>
+      <TimeInBetweenNextWave>5</TimeInBetweenNextWave>
+    </Wave>
   </Waves>
 </Level>

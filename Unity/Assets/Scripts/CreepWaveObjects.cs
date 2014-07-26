@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CreepLoadout {
 	public Transform Creep;
@@ -22,4 +23,10 @@ public class Wave {
 	public float TimeToStartWave;
 	public float TimeInBetweenNextWave;
 	public bool IsActive;
+	public float GetWaveDuration()
+	{
+				return  Swarms.Sum (x => (x.Quantity - 1) * x.TimeInBetweenCreeps)
+						+ Swarms.Sum (x => x.TimeToNextSwarm)
+						+ TimeInBetweenNextWave;
+		}
 }
