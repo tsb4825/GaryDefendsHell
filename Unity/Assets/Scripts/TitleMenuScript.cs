@@ -11,6 +11,7 @@ public class TitleMenuScript : MonoBehaviour
 		private float delayBetweenWords = .75f;
 		public AudioClip wordFall;
 		private IDictionary<WordTypes,AnimatingWord> animatingWords;
+		private bool ShowConfirmWindow;
 
 		void Start ()
 		{
@@ -60,7 +61,8 @@ public class TitleMenuScript : MonoBehaviour
 						Application.LoadLevel ("Map");
 				}
 
-				if (
+				if (PlayerPrefs.HasKey ("Level1")) {
+						if (
 			GUI.Button (
 			// Center in X, 2/3 of the height in Y
 			new Rect (
@@ -68,11 +70,16 @@ public class TitleMenuScript : MonoBehaviour
 			0,
 			resetGameDataButtonSize.x,
 			resetGameDataButtonSize.y
-				),
+						),
 			"Reset Save Data"
-				)
+						)
 			) {
-						PlayerPrefs.DeleteAll ();
+								ShowConfirmWindow = true;
+						}
+				}
+
+				if (ShowConfirmWindow) {
+						DrawModalWindow ();
 				}
 
 				if (
@@ -90,6 +97,23 @@ public class TitleMenuScript : MonoBehaviour
 						
 				}
 				GUI.EndGroup ();
+		}
+
+		void DrawModalWindow ()
+		{
+				GUI.ModalWindow (0, new Rect (Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), ResetSaveData, "Are you sure?");
+		}
+
+		void ResetSaveData (int windowID)
+		{
+				GUI.Label (new Rect (50, 50, 300, 30), "Are you sure you want to reset your save data?");
+				if (GUI.Button (new Rect (140, 80, 60, 30), "Yes")) {
+						PlayerPrefs.DeleteAll ();
+						ShowConfirmWindow = false;
+				}
+				if (GUI.Button (new Rect (210, 80, 60, 30), "No")) {
+						ShowConfirmWindow = false;
+				}
 		}
 
 		void Update ()

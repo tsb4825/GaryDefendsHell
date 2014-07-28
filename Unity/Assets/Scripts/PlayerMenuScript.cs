@@ -7,12 +7,13 @@ public class PlayerMenuScript : MonoBehaviour
 		private const int ButtonWidth = 84;
 		private const int ButtonHeight = 30;
 		private float ButtonX = Screen.width * .8f + (Screen.width * .2f / 2f) - ButtonWidth;
+		private GameState GameState;
 
 		void OnGUI ()
 		{
 				GUI.Box (new Rect (Screen.width * .8f, 0.0f, Screen.width * .2f, Screen.height), "");
 
-				if (!FindObjectOfType<WaveScript> ().AreAllCreepsReleased ()) {
+				if (!FindObjectOfType<WaveScript> ().AreAllCreepsReleased () && GameState == GameState.Running) {
 						if (
 			GUI.Button (
 			new Rect (
@@ -71,10 +72,11 @@ public class PlayerMenuScript : MonoBehaviour
 			"Pause"
 				)
 			) {
+						GameState = GameState == GameState.Running ? GameState.Paused : GameState.Running;
 						Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 				}
 
-				if (!FindObjectOfType<WaveScript> ().AreAllCreepsReleased ()) {
+				if (!FindObjectOfType<WaveScript> ().AreAllCreepsReleased () && GameState == GameState.Running) {
 						if (
 			GUI.Button (
 			new Rect (
@@ -90,4 +92,10 @@ public class PlayerMenuScript : MonoBehaviour
 						}
 				}
 		}
+}
+
+public enum GameState
+{
+		Running,
+		Paused
 }
