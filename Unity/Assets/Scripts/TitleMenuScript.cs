@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 public class TitleMenuScript : MonoBehaviour
 {
-		Vector2 startButtonSize = new Vector2 (84f, 60f);
-		Vector2 resetGameDataButtonSize = new Vector2 (154f, 60f);
-		Vector2 creditsButtonSize = new Vector2 (84f, 60f);
-		Vector2 buttonSpacing = new Vector2 (40f, 40f);
-		private float delayBetweenWords = .75f;
-		public AudioClip wordFall;
-		private IDictionary<WordTypes,AnimatingWord> animatingWords;
-		private bool ShowConfirmWindow;
+    Vector2 startButtonSize = new Vector2(84f, 60f);
+    Vector2 resetGameDataButtonSize = new Vector2(154f, 60f);
+    Vector2 creditsButtonSize = new Vector2(84f, 60f);
+    Vector2 buttonSpacing = new Vector2(40f, 40f);
+    private float delayBetweenWords = .75f;
+    public AudioClip wordFall;
+    private IDictionary<WordTypes, AnimatingWord> animatingWords;
+    private bool ShowConfirmWindow;
 
-		void Start ()
-		{
-				float delayTime = Time.time;
-				animatingWords = new Dictionary<WordTypes,AnimatingWord>
+    void Start()
+    {
+        float delayTime = Time.time;
+        animatingWords = new Dictionary<WordTypes, AnimatingWord>
 				{ 
 					{
 						WordTypes.Hell, 
@@ -35,130 +35,107 @@ public class TitleMenuScript : MonoBehaviour
 						new AnimatingWord{TargetLocation = new Vector2 (2.45f, .15f), AnimateTime = delayTime + delayBetweenWords * 3}
 					}
 					};
-		}
+    }
 
-		void OnGUI ()
-		{
-				GUI.BeginGroup (new Rect (Screen.width / 2 - ((startButtonSize.x + buttonSpacing.x + resetGameDataButtonSize.x + buttonSpacing.x + creditsButtonSize.x) / 2f), 
-		                          2f * Screen.height / 3f, 
-		                          startButtonSize.x + buttonSpacing.x + resetGameDataButtonSize.x + buttonSpacing.x + creditsButtonSize.x, 
-		                          startButtonSize.y));
-				// Draw a button to start the game
-				if (
-			GUI.Button (
-				// Center in X, 2/3 of the height in Y
-				new Rect (
-				0,
-				0,
-				startButtonSize.x,
-				startButtonSize.y
-				),
-				PlayerPrefs.HasKey ("Level1") ? "Continue" : "Start!"
-				)
-				) {
-						// On Click, load the first level.
-						// "Stage1" is the name of the first scene we created.
-						Application.LoadLevel ("Map");
-				}
+    void OnGUI()
+    {
+        GUI.BeginGroup(new Rect(Screen.width / 2 - ((startButtonSize.x + buttonSpacing.x + (PlayerPrefs.HasKey("Level1") ? resetGameDataButtonSize.x + buttonSpacing.x : 0) + creditsButtonSize.x) / 2f),
+                          2f * Screen.height / 3f,
+                          startButtonSize.x + buttonSpacing.x + (PlayerPrefs.HasKey("Level1") ? resetGameDataButtonSize.x + buttonSpacing.x : 0) + creditsButtonSize.x,
+                          startButtonSize.y));
 
-				if (PlayerPrefs.HasKey ("Level1")) {
-						if (
-			GUI.Button (
-			// Center in X, 2/3 of the height in Y
-			new Rect (
-			startButtonSize.x + buttonSpacing.x,
-			0,
-			resetGameDataButtonSize.x,
-			resetGameDataButtonSize.y
-						),
-			"Reset Save Data"
-						)
-			) {
-								ShowConfirmWindow = true;
-						}
-				}
+        if (GUI.Button(new Rect(0, 0, startButtonSize.x, startButtonSize.y), PlayerPrefs.HasKey("Level1") ? "Continue" : "Start!"))
+        {
+            Application.LoadLevel("Map");
+        }
 
-				if (ShowConfirmWindow) {
-						DrawModalWindow ();
-				}
+        if (PlayerPrefs.HasKey("Level1"))
+        {
+            if (GUI.Button( new Rect(startButtonSize.x + buttonSpacing.x, 0, resetGameDataButtonSize.x, resetGameDataButtonSize.y), "Reset Save Data"))
+            {
+                ShowConfirmWindow = true;
+            }
+        }
 
-				if (
-			GUI.Button (
-			// Center in X, 2/3 of the height in Y
-			new Rect (
-			startButtonSize.x + resetGameDataButtonSize.x + (buttonSpacing.x * 2),
-			0,
-			creditsButtonSize.x,
-			creditsButtonSize.y
-				),
-			"Credits"
-				)
-			) {
-						
-				}
-				GUI.EndGroup ();
-		}
+        if (ShowConfirmWindow)
+        {
+            DrawModalWindow();
+        }
 
-		void DrawModalWindow ()
-		{
-				GUI.ModalWindow (0, new Rect (Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), ResetSaveData, "Are you sure?");
-		}
+        if (GUI.Button(new Rect(startButtonSize.x + (PlayerPrefs.HasKey("Level1") ? resetGameDataButtonSize.x + buttonSpacing.x : 0) + buttonSpacing.x, 0, creditsButtonSize.x, creditsButtonSize.y), 
+            "Credits"))
+        {
+            Application.LoadLevel("Credits");
+        }
+        GUI.EndGroup();
+    }
 
-		void ResetSaveData (int windowID)
-		{
-				GUI.Label (new Rect (50, 50, 300, 30), "Are you sure you want to reset your save data?");
-				if (GUI.Button (new Rect (140, 80, 60, 30), "Yes")) {
-						PlayerPrefs.DeleteAll ();
-						ShowConfirmWindow = false;
-				}
-				if (GUI.Button (new Rect (210, 80, 60, 30), "No")) {
-						ShowConfirmWindow = false;
-				}
-		}
+    void DrawModalWindow()
+    {
+        GUI.ModalWindow(0, new Rect(Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), ResetSaveData, "Are you sure?");
+    }
 
-		void Update ()
-		{
+    void ResetSaveData(int windowID)
+    {
+        GUI.Label(new Rect(50, 50, 300, 30), "Are you sure you want to reset your save data?");
+        if (GUI.Button(new Rect(140, 80, 60, 30), "Yes"))
+        {
+            PlayerPrefs.DeleteAll();
+            ShowConfirmWindow = false;
+        }
+        if (GUI.Button(new Rect(210, 80, 60, 30), "No"))
+        {
+            ShowConfirmWindow = false;
+        }
+    }
 
-				foreach (var animatingWord in animatingWords) {
-						if (Time.time >= animatingWord.Value.AnimateTime) {
-								Transform word;
-								switch (animatingWord.Key) {
-								case WordTypes.Hell:
-										word = GameObject.Find ("HellLettering").transform;
-										break;
-								case WordTypes.Defends:
-										word = GameObject.Find ("DefendsLettering").transform;
-										break;
-								case WordTypes.Gary:
-										word = GameObject.Find ("GaryLettering").transform;
-										break;
-								case WordTypes.TD:
-										word = GameObject.Find ("TDLettering").transform;
-										break;
-								default:
-										throw new UnityException ("Title word does not exist.");
-								}
-								word.position = Vector2.MoveTowards (word.position, animatingWord.Value.TargetLocation, Time.deltaTime * 7);
-								if ((Vector2)word.position == animatingWord.Value.TargetLocation && !animatingWord.Value.HasSoundEffectPlayed) {
-										animatingWord.Value.HasSoundEffectPlayed = true;
-										audio.PlayOneShot (wordFall);
-								}
-						}
-				}
-		}
+    void Update()
+    {
+
+        foreach (var animatingWord in animatingWords)
+        {
+            if (Time.time >= animatingWord.Value.AnimateTime)
+            {
+                Transform word;
+                switch (animatingWord.Key)
+                {
+                    case WordTypes.Hell:
+                        word = GameObject.Find("HellLettering").transform;
+                        break;
+                    case WordTypes.Defends:
+                        word = GameObject.Find("DefendsLettering").transform;
+                        break;
+                    case WordTypes.Gary:
+                        word = GameObject.Find("GaryLettering").transform;
+                        break;
+                    case WordTypes.TD:
+                        word = GameObject.Find("TDLettering").transform;
+                        break;
+                    default:
+                        throw new UnityException("Title word does not exist.");
+                }
+                word.position = Vector2.MoveTowards(word.position, animatingWord.Value.TargetLocation, Time.deltaTime * 7);
+                if ((Vector2)word.position == animatingWord.Value.TargetLocation && !animatingWord.Value.HasSoundEffectPlayed)
+                {
+                    animatingWord.Value.HasSoundEffectPlayed = true;
+                    audio.PlayOneShot(wordFall);
+                }
+            }
+        }
+    }
 }
 
 public class AnimatingWord
 {
-		public bool HasSoundEffectPlayed;
-		public Vector2 TargetLocation;
-		public float AnimateTime;
+    public bool HasSoundEffectPlayed;
+    public Vector2 TargetLocation;
+    public float AnimateTime;
 }
 
 public enum WordTypes
 {
-		Gary,
-		Defends,
-		Hell,
-		TD
+    Gary,
+    Defends,
+    Hell,
+    TD
 }
