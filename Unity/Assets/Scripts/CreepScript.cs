@@ -70,7 +70,7 @@ public class CreepScript : MonoBehaviour
                 IsMovingTowardFighter = true;
                 float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
                     ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
-        : 1f;
+                    : 1f;
                 newUnitSpeed *= UnitSpeed;
                 transform.position += (UseUnitZPosition(FightingTarget.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
             }

@@ -12,7 +12,7 @@ public class HomingProjectileScript : ProjectileScript
     {
         if (Target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Target.position, Time.deltaTime * ProjectileSpeed);
+            transform.position += (Target.position - transform.position).normalized * Time.deltaTime * ProjectileSpeed;
             LastTargetPosition = Target.position;
             HasTargetChanged = true;
         }

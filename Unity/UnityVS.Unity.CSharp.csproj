@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\WaveScript.cs" />
     <Compile Include="Assets\Scripts\WayPointScript.cs" />
     <None Include="Assets\LevelConfigurations\Level1.xml" />
+    <None Include="Assets\Settings\Credits.txt" />
     <None Include="Assets\Settings\TowerTreeSettings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

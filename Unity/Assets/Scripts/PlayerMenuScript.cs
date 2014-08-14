@@ -46,7 +46,7 @@ public class PlayerMenuScript : MonoBehaviour
             }
         }
 
-        if (!FindObjectOfType<WaveScript>().AreAllCreepsReleased() && GameState == GameState.Running)
+        if (!FindObjectOfType<WaveScript>().AreAllWavesReleased() && GameState == GameState.Running)
         {
             if (GUI.Button(new Rect(ButtonX,230f - (ButtonHeight / 2f),ButtonWidth,ButtonHeight),"Next Wave"))
             {

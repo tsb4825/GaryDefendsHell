@@ -8,6 +8,8 @@ public class CreditsScript : MonoBehaviour {
     private List<string> creditsArray;
     public float creditSpeed;
     private List<Rect> creditsRectangle = new List<Rect>();
+    public GUIStyle creditsStyle;
+    public TextAsset creditsText;
 
 	void Start () {
         var creditsText = GetCreditsText();
@@ -25,48 +27,29 @@ public class CreditsScript : MonoBehaviour {
     {
         for (int i = 0; i < creditsArray.Count; i++)
         {
-            GUI.Label(creditsRectangle[i], creditsArray[i]);
+            GUI.Label(creditsRectangle[i], creditsArray[i], creditsStyle);
             Rect tempRect = creditsRectangle[i];
             tempRect.y = tempRect.y - creditSpeed;
             creditsRectangle[i] = tempRect;
         }
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Application.LoadLevel("MainScreen");
+        }
+    }
+
     private List<string> GetCreditsText()
     {
         List<string> credits = new List<string>();
-        credits.Add("Dedicated to");
-        credits.Add("Mr. Logan S. Byars Esquire");
-        credits.Add(string.Empty);
-        credits.Add("A Game By");
-        credits.Add("Tim Byars");
-        credits.Add(string.Empty);
-        credits.Add("Concept By");
-        credits.Add("Tim Byars");
-        credits.Add(string.Empty);
-        credits.Add("Programming");
-        credits.Add("Tim Byars");
-        credits.Add(string.Empty);
-        credits.Add("QA (The \"Real\" Work)");
-        credits.Add("Tim Byars");
-        credits.Add(string.Empty);
-        credits.Add("Coffee Getter");
-        credits.Add("Tim Byars");
-        credits.Add(string.Empty);
-        credits.Add("Special Thanks");
-        credits.Add("A true brony - Joe H.");
-        credits.Add("Unity");
-        credits.Add("Unity Forums");
-        credits.Add("Google Searches");
-        credits.Add("All the people smarter than me that code");
-        credits.Add("Coffee");
-        credits.Add(string.Empty);
-        credits.Add("Not Special Thanks");
-        credits.Add("My Job");
-        credits.Add("Childhood diseases I get as an adult");
-        credits.Add("Diarrhea");
-        credits.Add(string.Empty);
-
+        string text = creditsText.text;
+        foreach (var line in text.Split('\n'))
+        {
+            credits.Add(line);
+        }
         return credits;
     }
 }
