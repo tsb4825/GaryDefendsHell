@@ -7,6 +7,10 @@ public class MapSelectionScript : MonoBehaviour
     public bool IsLevelSelected;
     public Transform LevelSelected;
     public int MaxLevel;
+
+    private const int ButtonWidth = 84;
+    private const int ButtonHeight = 30;
+    private float ButtonX = Screen.width * .8f + (Screen.width * .2f / 2f) - ButtonWidth;
     
     void Start()
     {
@@ -30,6 +34,12 @@ public class MapSelectionScript : MonoBehaviour
         if (IsLevelSelected)
         {
             BuildTowerPopup();
+        }
+        GUI.Box(new Rect(Screen.width * .8f, 0.0f, Screen.width * .2f, Screen.height), "");
+
+        if (GUI.Button(new Rect(ButtonX, 30f - (ButtonHeight / 2f), ButtonWidth, ButtonHeight), "Back"))
+        {
+            Application.LoadLevel("MainScreen");
         }
     }
 

@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour
         {
             if (Time.time >= GameOverMessageTime)
             {
-                Application.LoadLevel("MainScreen");
+                Application.LoadLevel("Map");
             }
         }
         if (AreAllCreepsReleased && GameObject.FindGameObjectWithTag("Enemy") == null && Lives >= 0)
@@ -58,7 +58,7 @@ public class PlayerScript : MonoBehaviour
             }
             if (Time.time >= GameOverMessageTime)
             {
-                Application.LoadLevel("MainScreen");
+                Application.LoadLevel("Map");
             }
         }
     }
