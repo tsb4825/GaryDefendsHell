@@ -8,5 +8,6 @@ public class Affliction {
 }
 
 public enum AfflictionTypes{
-	SpeedBoost
+	SpeedBoost,
+    Stun
 }

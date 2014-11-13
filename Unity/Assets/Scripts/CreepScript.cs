@@ -62,36 +62,39 @@ public class CreepScript : MonoBehaviour
                 WayPointTarget = Target;
             }
         }
-        if (IsFighting && FightingTarget != null)
+        if (!Afflictions.Any(x => x.AfflictionType == AfflictionTypes.Stun))
         {
-            if ((UtilityFunctions.UseUnitZPosition(transform, transform.position) - UtilityFunctions.UseUnitZPosition(transform, FightingTarget.position)).sqrMagnitude > DistanceBetweenMeleeFighters)
+            if (IsFighting && FightingTarget != null)
             {
-                UtilityFunctions.DebugMessage("Moving towards melee target.");
-                IsMovingTowardFighter = true;
-                float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
-                    ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
-                    : 1f;
-                newUnitSpeed *= UnitSpeed;
-                transform.position += (UseUnitZPosition(FightingTarget.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
+                if ((UtilityFunctions.UseUnitZPosition(transform, transform.position) - UtilityFunctions.UseUnitZPosition(transform, FightingTarget.position)).sqrMagnitude > DistanceBetweenMeleeFighters)
+                {
+                    UtilityFunctions.DebugMessage("Moving towards melee target.");
+                    IsMovingTowardFighter = true;
+                    float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
+                        ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
+                        : 1f;
+                    newUnitSpeed *= UnitSpeed;
+                    transform.position += (UseUnitZPosition(FightingTarget.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
+                }
+                else
+                {
+                    IsMovingTowardFighter = false;
+                    Attack();
+                }
+            }
+            else if (IsFighting)
+            {
+                IsMovingTowardFighter = false;
+                IsFighting = false;
             }
             else
             {
-                IsMovingTowardFighter = false;
-                Attack();
+                float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
+                ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
+                : 1f;
+                newUnitSpeed *= UnitSpeed;
+                transform.position += (UseUnitZPosition(WayPointTarget.transform.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
             }
-        }
-        else if (IsFighting)
-        {
-            IsMovingTowardFighter = false;
-            IsFighting = false;
-        }
-        else
-        {
-            float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
-            ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
-            : 1f;
-            newUnitSpeed *= UnitSpeed;
-            transform.position += (UseUnitZPosition(WayPointTarget.transform.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
         }
         Afflictions.RemoveAll(x => x.EndTime <= Time.time);
     }

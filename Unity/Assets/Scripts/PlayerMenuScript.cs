@@ -53,6 +53,11 @@ public class PlayerMenuScript : MonoBehaviour
                 FindObjectsOfType<WaveScript>()[0].ReleaseNextWave();
             }
         }
+
+        if (GUI.Button(new Rect(ButtonX, 280f - (ButtonHeight / 2f), ButtonWidth, ButtonHeight), "Restart"))
+        {
+            Application.LoadLevel("Level" + FindObjectsOfType<PlayerScript>()[0].LevelNumber);
+        }
     }
 }
 

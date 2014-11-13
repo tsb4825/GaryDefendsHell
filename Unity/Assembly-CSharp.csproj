@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\Towers\HomingTowerScript.cs" />
      <Compile Include="Assets\Scripts\Towers\MultiConstantAttackTowerScript.cs" />
      <Compile Include="Assets\Scripts\Towers\ProjectileTowerScript.cs" />
+     <Compile Include="Assets\Scripts\Towers\StunDrainTowerScript.cs" />
      <Compile Include="Assets\Scripts\Towers\Tower.cs" />
      <Compile Include="Assets\Scripts\Towers\TowerBaseScript.cs" />
      <Compile Include="Assets\Scripts\Towers\TowerSettings.cs" />
