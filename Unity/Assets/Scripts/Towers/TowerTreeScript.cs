@@ -96,7 +96,8 @@ public enum TowerTypes
     AOE,
     Normal,
     Homing,
-    Barracks
+    Barracks,
+    StunAndDrain
 }
 
 public enum TowerTreeTypes
@@ -105,5 +106,6 @@ public enum TowerTreeTypes
     AOE,
     Normal,
     Homing,
-    Barracks
+    Barracks,
+    StunAndDrain
 }

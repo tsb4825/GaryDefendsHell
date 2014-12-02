@@ -4,19 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class StunDrainTowerScript :  Tower {
-    public int NumberOfProjectiles;
+    public int NumberOfAttackers;
     public Transform Projectile;
     public float StunTime;
     public float DrainSpeed;
     public float NextDrainTime;
-    public IEnumerable<Transform> DrainTargets;
+    public List<Transform> DrainTargets;
     public float DrainDamage;
+    public int DrainTimes;
+    public int DrainTimeCount;
 
     public override void Fire()
     {
-        IEnumerable<Transform> targets = FindClosestTargets(NumberOfProjectiles);
-        DrainTargets = targets;
-        foreach(Transform target in targets)
+        Debug.Log("Firing");
+        DrainTimeCount = 0;
+        DrainTargets = FindClosestTargets(NumberOfAttackers);
+        Debug.Log("Targets stunning: " + DrainTargets.Count);
+        foreach (Transform target in DrainTargets)
         {
             // draw tenacle
             target.GetComponent<CreepScript>().AddAffliction(AfflictionTypes.Stun, StunTime, 0);
@@ -26,34 +30,35 @@ public class StunDrainTowerScript :  Tower {
 
     public override void Update()
     {
-        if (Time.time >= NextFireTime)
+        if (DrainTargets != null && DrainTargets.Count > 0 && Time.time >= NextDrainTime && DrainTimeCount < DrainTimes)
         {
-            Fire();
-            NextFireTime = Time.time + AttackCooldown;
-        }
-        if (DrainTargets != null && NextDrainTime < Time.time)
-        {
+            Debug.Log("Drain Count: " + DrainTimeCount);
+            Debug.Log("DrainTargets Count: " + DrainTargets.Count);
+            DrainTargets.RemoveAll(x => x == null);
             foreach( Transform target in DrainTargets)
             {
                 target.GetComponent<CreepScript>().TakeDamage(DrainDamage);
             }
+            NextDrainTime = Time.time + DrainSpeed;
+            DrainTimeCount = DrainTimeCount += 1;
         }
         base.Update();
     }
 
-    private IEnumerable<Transform> FindClosestTargets(int targets)
+    private List<Transform> FindClosestTargets(int targets)
     {
+        Debug.Log("Targets Count: " + Targets.Count);
         if (targets >= Targets.Count)
             return Targets;
         else
         {
-            IEnumerable<Creep> creeps = Targets.Select(x =>
+            List<Creep> creeps = Targets.Select(x =>
                 new Creep
                 {
                     Transform = x,
                     Distance = (UtilityFunctions.UseUnitZPosition(x, x.transform.position) - UtilityFunctions.UseUnitZPosition(x, transform.position)).sqrMagnitude
-                });
-            return creeps.OrderBy(x => x.Distance).Take(targets).Select(x => x.Transform);
+                }).ToList();
+            return creeps.OrderBy(x => x.Distance).Take(targets).Select(x => x.Transform).ToList();
         }
     }
 

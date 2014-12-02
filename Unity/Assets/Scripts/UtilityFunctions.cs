@@ -63,7 +63,7 @@ public static class UtilityFunctions
 
     public static void DebugMessage(string message)
     {
-        if (true)
+        if (false)
         {
             Debug.Log(message);
         }
