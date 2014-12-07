@@ -14,12 +14,18 @@ public class StunDrainTowerScript :  Tower {
     public int DrainTimes;
     public int DrainTimeCount;
 
+    public StunDrainTowerScript()
+    {
+        DrainTargets = new List<Transform>();
+    }
+
     public override void Fire()
     {
         Debug.Log("Firing");
         DrainTimeCount = 0;
         DrainTargets = FindClosestTargets(NumberOfAttackers);
         Debug.Log("Targets stunning: " + DrainTargets.Count);
+        DrainTargets.RemoveAll(x => x == null);
         foreach (Transform target in DrainTargets)
         {
             // draw tenacle
@@ -49,7 +55,7 @@ public class StunDrainTowerScript :  Tower {
     {
         Debug.Log("Targets Count: " + Targets.Count);
         if (targets >= Targets.Count)
-            return Targets;
+            return Targets.ToList();
         else
         {
             List<Creep> creeps = Targets.Select(x =>

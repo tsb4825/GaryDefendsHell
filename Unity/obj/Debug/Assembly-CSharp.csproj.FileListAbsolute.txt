@@ -9,3 +9,4 @@ C:\Git\GaryDefendsHell\Unity\Temp\bin\Debug\ICSharpCode.NRefactory.dll
 C:\Git\GaryDefendsHell\Unity\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Git\GaryDefendsHell\Unity\obj\Debug\Assembly-CSharp.dll
 C:\Git\GaryDefendsHell\Unity\obj\Debug\Assembly-CSharp.pdb
+C:\Git\GaryDefendsHell\Unity\Temp\bin\Debug\UnityEngine.UI.dll
