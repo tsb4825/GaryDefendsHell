@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public static class UtilityFunctions
 {
-
     public static Transform FindClosestWayPointToSelfAndTarget(Transform unit, Transform wayPointTarget, Transform target)
     {
         GameObject[] gos;

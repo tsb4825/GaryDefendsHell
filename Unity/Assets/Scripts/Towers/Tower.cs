@@ -150,7 +150,8 @@ public abstract class Tower : MonoBehaviour
         if (Target == null && Targets.Count > 0)
         {
             UtilityFunctions.DebugMessage("Searching for target through update");
-            Target = FindClosestTargetToBase();
+            List<Transform> targets = FindClosestTargetsToBase(1);
+            Target = targets.Any() ? targets[0] : null;
         }
     }
 
@@ -160,7 +161,8 @@ public abstract class Tower : MonoBehaviour
         {
             Targets.Add(collider.transform);
             UtilityFunctions.DebugMessage("Searching for target through trigger");
-            Target = FindClosestTargetToBase();
+            List<Transform> targets = FindClosestTargetsToBase(1);
+            Target = targets.Any() ? targets[0] : null;
         }
     }
 
@@ -170,31 +172,50 @@ public abstract class Tower : MonoBehaviour
         {
             Targets.Remove(collider.transform);
             UtilityFunctions.DebugMessage("Searching for target through exit trigger");
-            Target = FindClosestTargetToBase();
+            List<Transform> targets = FindClosestTargetsToBase(1);
+            Target = targets.Any() ? targets[0] : null;
         }
     }
 
     public abstract void Fire();
 
-    protected Transform FindClosestTargetToBase()
+    protected List<Transform> FindClosestTargetsToBase(int targets)
     {
         RemoveNullTargets();
         UtilityFunctions.DebugMessage("Targets: " + Targets.Count);
-        Transform closest = null;
-        var distanceToBase = Mathf.Infinity;
         var basePosition = UseUnitZPosition(GameObject.FindGameObjectsWithTag("Base")[0].transform.position);
         // Iterate through them and find the closest to base
-        foreach (Transform target in Targets)
-        {
-            var diff = (UseUnitZPosition(target.transform.position) - basePosition);
-            var curDistance = diff.sqrMagnitude;
-            if (curDistance < distanceToBase)
+        List<Creep> creeps = Targets.Select(x =>
+            new Creep
             {
-                closest = target;
-                distanceToBase = curDistance;
-            }
+                Transform = x,
+                Distance = (UseUnitZPosition(x.transform.position) - basePosition).sqrMagnitude
+            }).ToList();
+
+        return creeps.OrderBy(x => x.Distance).Take(targets).Select(x => x.Transform).ToList();
+    }
+
+    protected IEnumerable<Transform> FindClosestTargets(int targets)
+    {
+        RemoveNullTargets();
+        if (targets >= Targets.Count())
+            return Targets.ToList();
+        else
+        {
+            List<Creep> creeps = Targets.Select(x =>
+                new Creep
+                {
+                    Transform = x,
+                    Distance = (UtilityFunctions.UseUnitZPosition(x, x.transform.position) - UtilityFunctions.UseUnitZPosition(x, transform.position)).sqrMagnitude
+                }).ToList();
+            return creeps.OrderBy(x => x.Distance).Take(targets).Select(x => x.Transform).ToList();
         }
-        return closest;
+    }
+
+    private class Creep
+    {
+        public Transform Transform { get; set; }
+        public float Distance { get; set; }
     }
 
     private Vector3 UseUnitZPosition(Vector3 position)

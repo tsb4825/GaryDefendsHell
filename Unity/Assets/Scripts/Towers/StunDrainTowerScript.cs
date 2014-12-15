@@ -23,7 +23,7 @@ public class StunDrainTowerScript :  Tower {
     {
         Debug.Log("Firing");
         DrainTimeCount = 0;
-        DrainTargets = FindClosestTargets(NumberOfAttackers);
+        DrainTargets = (List<Transform>)FindClosestTargetsToBase(NumberOfAttackers);
         Debug.Log("Targets stunning: " + DrainTargets.Count);
         DrainTargets.RemoveAll(x => x == null);
         foreach (Transform target in DrainTargets)
@@ -49,28 +49,5 @@ public class StunDrainTowerScript :  Tower {
             DrainTimeCount = DrainTimeCount += 1;
         }
         base.Update();
-    }
-
-    private List<Transform> FindClosestTargets(int targets)
-    {
-        Debug.Log("Targets Count: " + Targets.Count);
-        if (targets >= Targets.Count)
-            return Targets.ToList();
-        else
-        {
-            List<Creep> creeps = Targets.Select(x =>
-                new Creep
-                {
-                    Transform = x,
-                    Distance = (UtilityFunctions.UseUnitZPosition(x, x.transform.position) - UtilityFunctions.UseUnitZPosition(x, transform.position)).sqrMagnitude
-                }).ToList();
-            return creeps.OrderBy(x => x.Distance).Take(targets).Select(x => x.Transform).ToList();
-        }
-    }
-
-    private class Creep
-    {
-        public Transform Transform {get;set;}
-        public float Distance { get; set; }
     }
 }
