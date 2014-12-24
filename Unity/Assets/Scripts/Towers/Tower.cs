@@ -42,7 +42,7 @@ public abstract class Tower : MonoBehaviour
         {
             if (GUI.Button(
     new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth * (index + 1)) + (ButtonWidth * index), guiY - (BoxHeight / 2) + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
-    (Texture)Resources.Load(GetTextureName(TowerChoices[index].TowerType))))
+    (Texture)Resources.Load(GetTextureNameOfIcon(TowerChoices[index].TowerType))))
             {
                 if (player.Gold >= TowerChoices[index].GoldCost)
                 {
@@ -71,7 +71,7 @@ public abstract class Tower : MonoBehaviour
         }
     }
 
-    private string GetTextureName(TowerTypes towerType)
+    private string GetTextureNameOfIcon(TowerTypes towerType)
     {
         switch (towerType)
         {
@@ -83,6 +83,8 @@ public abstract class Tower : MonoBehaviour
                 return "Sphere";
             case TowerTypes.Barracks:
                 return "Barracks";
+            case TowerTypes.StunAndDrain:
+                return "Drain";
             default:
                 throw new UnityException("TowerType not supported.");
         }
@@ -100,6 +102,8 @@ public abstract class Tower : MonoBehaviour
                 return "AOETower";
             case TowerTypes.Barracks:
                 return "BarracksTower";
+            case TowerTypes.StunAndDrain:
+                return "DrainTower";
             default:
                 throw new UnityException("TowerType not supported.");
         }

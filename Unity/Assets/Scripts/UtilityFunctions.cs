@@ -74,4 +74,9 @@ public static class UtilityFunctions
     {
         return ((Mathf.Abs(position1.x - position2.x) <= .04f) && (Mathf.Abs(position1.y - position2.y) <= .04f));
     }
+
+    //public static IEnumerable<Vector2> GetWayPointsRelevantToObject(Vector2 objectPosition, float radius)
+    //{
+    //    IEnumerable<Transform> wayPoints 
+    //}
 }

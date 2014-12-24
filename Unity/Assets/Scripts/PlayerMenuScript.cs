@@ -9,6 +9,7 @@ public class PlayerMenuScript : MonoBehaviour
     private float ButtonX = Screen.width * .8f + (Screen.width * .2f / 2f) - ButtonWidth;
     private GameState GameState;
     private bool IsGameStarted;
+    private bool ShowConfirmWindow;
 
     void OnGUI()
     {
@@ -56,7 +57,34 @@ public class PlayerMenuScript : MonoBehaviour
 
         if (GUI.Button(new Rect(ButtonX, 280f - (ButtonHeight / 2f), ButtonWidth, ButtonHeight), "Restart"))
         {
+            ShowConfirmWindow = true;
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        }
+
+        if (ShowConfirmWindow)
+        {
+            DrawModalWindow();
+        }
+    }
+
+    void DrawModalWindow()
+    {
+        GUI.ModalWindow(0, new Rect(Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), RestartLevel, "Are you sure?");
+    }
+
+    void RestartLevel(int windowID)
+    {
+        GUI.Label(new Rect(50, 50, 300, 30), "Are you sure you want to restart the level?");
+        if (GUI.Button(new Rect(140, 80, 60, 30), "Yes"))
+        {
+            ShowConfirmWindow = false;
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
             Application.LoadLevel("Level" + FindObjectsOfType<PlayerScript>()[0].LevelNumber);
+        }
+        if (GUI.Button(new Rect(210, 80, 60, 30), "No"))
+        {
+            ShowConfirmWindow = false;
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         }
     }
 }

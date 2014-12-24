@@ -7,4 +7,6 @@
   </Base>
   <Base Name="Normal" GoldCost="120">
   </Base>
+  <Base Name="StunAndDrain" GoldCost="120">
+  </Base>
 </TowerTree>

@@ -40,7 +40,7 @@ public class ArcingProjectile : ProjectileScript
             transform.position = new Vector3(transform.position.x, transform.position.y, newScale);
             if (newScale <= 1)
             {
-                UtilityFunctions.DebugMessage("Actual Target Location: " + Target.position);
+                //UtilityFunctions.DebugMessage("Actual Target Location: " + Target != null ? Target.position.ToString() : "");
                 UtilityFunctions.DebugMessage("Actual Frames to Target: " + ActualFramesToTarget);
                 IsMoving = false;
                 transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
