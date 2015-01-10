@@ -50,7 +50,7 @@ public class ComicCelScript : MonoBehaviour
             var cameraPosition = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
             GameObject.FindGameObjectWithTag("MainCamera").transform.position += (ScreenPositions[positionIndex] - cameraPosition).normalized * ZoomSpeed * Time.deltaTime;
         }
-        if (ScreenPositions[positionIndex].IsCloseEnough(GameObject.FindGameObjectWithTag("MainCamera").transform.position))
+        if (ScreenPositions[positionIndex].CameraIsCloseEnough(GameObject.FindGameObjectWithTag("MainCamera").transform.position))
         {
             WaitingOnMouseClick = true;
         }

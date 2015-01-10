@@ -9,7 +9,11 @@ public class MultiConstantAttackTowerScript : Tower
 
     public override void Fire()
     {
-        // Fire constant attack projectiles in random directions
+        // Get all paths
+
+        // Find all intersections of paths, remove duplicates
+
+        // Fire constant attack projectiles in at random paths
         for (int index = 0; index < NumberOfProjectiles; index++)
         {
             Vector3 endpoint = GetRandomEndPoint();

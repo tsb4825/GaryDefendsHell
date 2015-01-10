@@ -97,7 +97,8 @@ public enum TowerTypes
     Normal,
     Homing,
     Barracks,
-    StunAndDrain
+    StunAndDrain,
+    Slow
 }
 
 public enum TowerTreeTypes
@@ -107,5 +108,6 @@ public enum TowerTreeTypes
     Normal,
     Homing,
     Barracks,
-    StunAndDrain
+    StunAndDrain,
+    Slow
 }

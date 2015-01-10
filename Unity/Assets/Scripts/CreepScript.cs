@@ -70,10 +70,8 @@ public class CreepScript : MonoBehaviour
                 {
                     UtilityFunctions.DebugMessage("Moving towards melee target.");
                     IsMovingTowardFighter = true;
-                    float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
-                        ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
-                        : 1f;
-                    newUnitSpeed *= UnitSpeed;
+                    float unitSpeedAdjustment = GetUnitSpeedAdjustment();
+                    float newUnitSpeed = unitSpeedAdjustment * UnitSpeed;
                     transform.position += (UseUnitZPosition(FightingTarget.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
                 }
                 else
@@ -89,14 +87,22 @@ public class CreepScript : MonoBehaviour
             }
             else
             {
-                float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
-                ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
-                : 1f;
-                newUnitSpeed *= UnitSpeed;
+                float unitSpeedAdjustment = GetUnitSpeedAdjustment();
+                float newUnitSpeed = unitSpeedAdjustment * UnitSpeed;
                 transform.position += (UseUnitZPosition(WayPointTarget.transform.position) - transform.position).normalized * Time.deltaTime * newUnitSpeed;
             }
         }
         Afflictions.RemoveAll(x => x.EndTime <= Time.time);
+    }
+
+    private float GetUnitSpeedAdjustment()
+    {
+        float newUnitSpeed = Afflictions.Any(x => x.AfflictionType == AfflictionTypes.SpeedBoost)
+                        ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.SpeedBoost).Max(x => x.AffectAmount)
+                        : 1f;
+        return newUnitSpeed * (Afflictions.Any(x => x.AfflictionType == AfflictionTypes.Slow)
+            ? Afflictions.Where(x => x.AfflictionType == AfflictionTypes.Slow).Max(x => x.AffectAmount)
+                        : 1f);
     }
 
     private void Attack()

@@ -9,5 +9,6 @@ public class Affliction {
 
 public enum AfflictionTypes{
 	SpeedBoost,
-    Stun
+    Stun,
+    Slow
 }

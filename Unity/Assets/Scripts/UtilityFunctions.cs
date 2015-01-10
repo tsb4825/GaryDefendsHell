@@ -2,24 +2,25 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public static class UtilityFunctions
 {
     public static Transform FindClosestWayPointToSelfAndTarget(Transform unit, Transform wayPointTarget, Transform target)
     {
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag("WayPoint");
+        GameObject[] wayPoints;
+        wayPoints = GameObject.FindGameObjectsWithTag("WayPoint");
         GameObject closest = null;
         GameObject secondClosest = null;
         var distanceToSelf = Mathf.Infinity;
         var secondDistanceToSelf = Mathf.Infinity;
         var position = UseUnitZPosition(unit, unit.position);
         // Iterate through them and find the two closest ones
-        foreach (GameObject go in gos)
+        foreach (GameObject wayPoint in wayPoints)
         {
-            if (wayPointTarget == null || go.transform != wayPointTarget)
+            if (wayPointTarget == null || wayPoint.transform != wayPointTarget)
             {
-                var diff = (UseUnitZPosition(unit, go.transform.position) - UseUnitZPosition(unit, position));
+                var diff = (UseUnitZPosition(unit, wayPoint.transform.position) - UseUnitZPosition(unit, position));
                 var curDistance = diff.sqrMagnitude;
                 if (curDistance < distanceToSelf)
                 {
@@ -28,12 +29,12 @@ public static class UtilityFunctions
                         secondClosest = closest;
                         secondDistanceToSelf = distanceToSelf;
                     }
-                    closest = go;
+                    closest = wayPoint;
                     distanceToSelf = curDistance;
                 }
                 else if (curDistance < secondDistanceToSelf)
                 {
-                    secondClosest = go;
+                    secondClosest = wayPoint;
                     secondDistanceToSelf = curDistance;
                 }
             }
@@ -70,13 +71,52 @@ public static class UtilityFunctions
         }
     }
 
-    public static bool IsCloseEnough(this Vector3 position1, Vector3 position2)
+    public static bool CameraIsCloseEnough(this Vector3 position1, Vector3 position2)
     {
         return ((Mathf.Abs(position1.x - position2.x) <= .04f) && (Mathf.Abs(position1.y - position2.y) <= .04f));
     }
 
-    //public static IEnumerable<Vector2> GetWayPointsRelevantToObject(Vector2 objectPosition, float radius)
-    //{
-    //    IEnumerable<Transform> wayPoints 
-    //}
+    public static List<List<Vector3>> BuildAIPaths()
+    {
+        // get spawn points
+        GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn");
+
+        // get base
+        Transform baseBuilding = GameObject.FindGameObjectWithTag("Base").transform;
+
+        var paths = new List<List<Vector3>>();
+
+        // loop and build each one
+        foreach(GameObject spawn in spawns)
+        {
+            List<Vector3> path = new List<Vector3>();
+
+            Transform currentPosition = new GameObject().transform;
+            currentPosition.position = spawn.transform.position;
+
+            Transform previousWayPoint = null;
+
+            currentPosition = FindClosestWayPointToSelfAndTarget(currentPosition, previousWayPoint, baseBuilding);
+            Debug.Break();
+            // add nodes to path
+            path.Add(spawn.transform.position);
+            path.Add(currentPosition.transform.position);
+
+            int loopBreak = 0;
+            // loop till base reached, always take closest, exclude previous node
+            while (!baseBuilding.collider2D.bounds.Contains(UseUnitZPosition(baseBuilding, currentPosition.transform.position)) && loopBreak < 50)
+            {
+                loopBreak++;
+                previousWayPoint = currentPosition;
+                currentPosition = FindClosestWayPointToSelfAndTarget(currentPosition, previousWayPoint, baseBuilding);
+
+                //add vector to path
+                path.Add(currentPosition.transform.position);
+            }
+
+            paths.Add(path);
+        }
+
+        return paths;
+    }
 }
