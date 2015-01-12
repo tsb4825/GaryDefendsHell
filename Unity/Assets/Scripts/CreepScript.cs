@@ -56,7 +56,7 @@ public class CreepScript : MonoBehaviour
         if (WayPointTarget == null)
         {
             UtilityFunctions.DebugMessage("Finding waypoint through update");
-            WayPointTarget = UtilityFunctions.FindClosestWayPointToSelfAndTarget(transform, WayPointTarget, Target);
+            WayPointTarget = PathingScript.FindClosestWayPointToSelfAndTarget(transform, WayPointTarget, Target);
             if (WayPointTarget == null)
             {
                 WayPointTarget = Target;

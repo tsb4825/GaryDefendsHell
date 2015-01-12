@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\HealSkillScript.cs" />
     <Compile Include="Assets\Scripts\LevelWavesLoadOut.cs" />
     <Compile Include="Assets\Scripts\MapSelectionScript.cs" />
+    <Compile Include="Assets\Scripts\PathingScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMenuScript.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\Projectiles\ArcingProjectile.cs" />

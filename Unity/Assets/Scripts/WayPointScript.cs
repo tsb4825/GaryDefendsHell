@@ -12,7 +12,7 @@ public class WayPointScript : MonoBehaviour
             UtilityFunctions.DebugMessage("Finding waypoint through collider - " + collider.name);
             Transform wayPointTarget = collider.GetComponent<CreepScript>().WayPointTarget;
             Transform target = collider.GetComponent<CreepScript>().Target;
-            wayPointTarget = UtilityFunctions.FindClosestWayPointToSelfAndTarget(transform, wayPointTarget, target);
+            wayPointTarget = PathingScript.FindClosestWayPointToSelfAndTarget(transform, wayPointTarget, target);
             collider.GetComponent<CreepScript>().WayPointTarget = wayPointTarget ?? target;
         }
     }
