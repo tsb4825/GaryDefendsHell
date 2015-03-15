@@ -76,14 +76,14 @@ public static class PathingScript {
             Transform previousWayPoint = null;
 
             currentPosition = FindClosestWayPointToSelfAndTarget(currentPosition, previousWayPoint, baseBuilding);
-            Debug.Break();
+
             // add nodes to path
             path.Add(spawn.transform.position);
             path.Add(currentPosition.transform.position);
 
             int loopBreak = 0;
             // loop till base reached, always take closest, exclude previous node
-            while (!baseBuilding.collider2D.bounds.Contains(UtilityFunctions.UseUnitZPosition(baseBuilding, currentPosition.transform.position)) && loopBreak < 50)
+            while (!baseBuilding.GetComponent<Collider2D>().bounds.Contains(UtilityFunctions.UseUnitZPosition(baseBuilding, currentPosition.transform.position)) && loopBreak < 50)
             {
                 loopBreak++;
                 previousWayPoint = currentPosition;

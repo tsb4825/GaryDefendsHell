@@ -23,7 +23,7 @@ public class HomingProjectileScript : ProjectileScript
             if (Target == null && HasTargetChanged)
             {
                 UtilityFunctions.DebugMessage("Force Added. " + (LastTargetPosition - transform.position).normalized * 50 * ProjectileSpeed);
-                transform.rigidbody2D.AddForce((LastTargetPosition - transform.position).normalized * 50 * ProjectileSpeed);
+                transform.GetComponent<Rigidbody2D>().AddForce((LastTargetPosition - transform.position).normalized * 50 * ProjectileSpeed);
                 HasTargetChanged = false;
             }
             else if (Target != null)

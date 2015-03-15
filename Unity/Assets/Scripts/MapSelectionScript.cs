@@ -23,7 +23,7 @@ public class MapSelectionScript : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Level" + index))
             {
-                GameObject.Find("Level" + index).renderer.enabled = true;
+                GameObject.Find("Level" + index).GetComponent<Renderer>().enabled = true;
                 GameObject.Find("Level" + index).GetComponent<Rigidbody2D>().isKinematic = true;
             }
         }

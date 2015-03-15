@@ -12,7 +12,7 @@ public class ProjectileTowerScript : Tower
         var cannonPosition = transform.FindChild("ProjectileCannon").position;
         cannonPosition.z = 0;
         Transform bullet = (Transform)Instantiate(Projectile, cannonPosition, Quaternion.identity);
-        bullet.rigidbody2D.velocity = (Target.position - bullet.position).normalized * bullet.GetComponent<ProjectileScript>().ProjectileSpeed;
+        bullet.GetComponent<Rigidbody2D>().velocity = (Target.position - bullet.position).normalized * bullet.GetComponent<ProjectileScript>().ProjectileSpeed;
         UtilityFunctions.DebugMessage("Projectile velocity: " + (Target.position - bullet.position).normalized * bullet.GetComponent<ProjectileScript>().ProjectileSpeed);
     }
 

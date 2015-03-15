@@ -18,10 +18,10 @@ namespace Assets.Scripts
 
         void Update()
         {
-            if (!audio.isPlaying)
+            if (!GetComponent<AudioSource>().isPlaying)
             {
-                audio.clip = PlayList[ListIndex];
-                audio.Play();
+                GetComponent<AudioSource>().clip = PlayList[ListIndex];
+                GetComponent<AudioSource>().Play();
                 ListIndex++;
                 if (ListIndex >= PlayList.Count())
                 {

@@ -118,7 +118,7 @@ public class TitleMenuScript : MonoBehaviour
                 if ((Vector2)word.position == animatingWord.Value.TargetLocation && !animatingWord.Value.HasSoundEffectPlayed)
                 {
                     animatingWord.Value.HasSoundEffectPlayed = true;
-                    audio.PlayOneShot(wordFall);
+                    GetComponent<AudioSource>().PlayOneShot(wordFall);
                 }
             }
         }

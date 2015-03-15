@@ -20,14 +20,14 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-        camera.orthographic = true;
-        camera.orthographicSize = CurrentZoom;
+        GetComponent<Camera>().orthographic = true;
+        GetComponent<Camera>().orthographicSize = CurrentZoom;
         CalculateCameraBounds();
     }
 
     private void CalculateCameraBounds()
     {
-        var vertExtent = Camera.main.camera.orthographicSize;
+        var vertExtent = Camera.main.GetComponent<Camera>().orthographicSize;
         var horzExtent = vertExtent * Screen.width / Screen.height;
 
         MinX = horzExtent - MapWidth / 2.0f;
@@ -43,7 +43,7 @@ public class CameraScript : MonoBehaviour
             if (IsZoomEnabled && Input.GetAxis("Mouse ScrollWheel") > 0 && CurrentZoom > MaxZoom)
             {
                 CurrentZoom = Mathf.Max(CurrentZoom - ZoomSpeed, MaxZoom);
-                camera.orthographicSize = CurrentZoom;
+                GetComponent<Camera>().orthographicSize = CurrentZoom;
                 CalculateCameraBounds();
             }
 
@@ -51,7 +51,7 @@ public class CameraScript : MonoBehaviour
             if (IsZoomEnabled && Input.GetAxis("Mouse ScrollWheel") < 0 && CurrentZoom < MinZoom)
             {
                 CurrentZoom = Mathf.Min(CurrentZoom + ZoomSpeed, MinZoom);
-                camera.orthographicSize = CurrentZoom;
+                GetComponent<Camera>().orthographicSize = CurrentZoom;
                 CalculateCameraBounds();
                 if (IsCameraOffScreen(transform.position))
                 {
