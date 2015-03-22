@@ -55,7 +55,7 @@ public static class PathingScript {
         }
     }
 
-    public static List<List<Vector3>> BuildAIPaths()
+    public static List<List<Vector2>> BuildAIPaths()
     {
         // get spawn points
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("Spawn");
@@ -63,12 +63,12 @@ public static class PathingScript {
         // get base
         Transform baseBuilding = GameObject.FindGameObjectWithTag("Base").transform;
 
-        var paths = new List<List<Vector3>>();
+        var paths = new List<List<Vector2>>();
 
         // loop and build each one
         foreach (GameObject spawn in spawns)
         {
-            List<Vector3> path = new List<Vector3>();
+            List<Vector2> path = new List<Vector2>();
 
             Transform currentPosition = new GameObject().transform;
             currentPosition.position = spawn.transform.position;
