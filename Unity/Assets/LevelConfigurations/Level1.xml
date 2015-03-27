@@ -9,6 +9,8 @@
           <TimeInBetweenCreeps>0.5</TimeInBetweenCreeps>
           <SpawnLocation>1</SpawnLocation>
           <TimeToNextSwarm>3</TimeToNextSwarm>
+          <ShowUnitDescription>true</ShowUnitDescription>
+          <UnitDescription>This is a unit that sucks.</UnitDescription>
         </Swarm>
         <Swarm>
           <Creep>AngelHeal</Creep>

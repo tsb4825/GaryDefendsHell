@@ -21,10 +21,8 @@ public class StunDrainTowerScript :  Tower {
 
     public override void Fire()
     {
-        Debug.Log("Firing");
         DrainTimeCount = 0;
         DrainTargets = (List<Transform>)FindClosestTargetsToBase(NumberOfAttackers);
-        Debug.Log("Targets stunning: " + DrainTargets.Count);
         DrainTargets.RemoveAll(x => x == null);
         foreach (Transform target in DrainTargets)
         {
@@ -38,8 +36,6 @@ public class StunDrainTowerScript :  Tower {
     {
         if (DrainTargets != null && DrainTargets.Count > 0 && Time.time >= NextDrainTime && DrainTimeCount < DrainTimes)
         {
-            Debug.Log("Drain Count: " + DrainTimeCount);
-            Debug.Log("DrainTargets Count: " + DrainTargets.Count);
             DrainTargets.RemoveAll(x => x == null);
             foreach( Transform target in DrainTargets)
             {

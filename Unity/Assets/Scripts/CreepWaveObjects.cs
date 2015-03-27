@@ -17,6 +17,8 @@ public class Swarm
     public float TimeOfNextCreep;
     public float TimeToNextSwarm;
     public float TimeOfNextSwarm;
+    public bool ShowUnitDescription;
+    public string UnitDescription;
 }
 
 public class Wave

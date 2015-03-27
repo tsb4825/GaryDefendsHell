@@ -39,17 +39,21 @@ public class LevelWavesLoadOut : MonoBehaviour
                 float timeInBetweenCreeps = float.Parse(swarmNode.Descendants("TimeInBetweenCreeps").First().Value);
                 int spawnLocation = int.Parse(swarmNode.Descendants("SpawnLocation").First().Value);
                 float timeToNextSwarm = float.Parse(swarmNode.Descendants("TimeToNextSwarm").First().Value);
+                bool showUnitDescription = swarmNode.Descendants("ShowUnitDescription").Any() ? bool.Parse(swarmNode.Descendants("ShowUnitDescription").First().Value) : false;
+                string unitDescription = swarmNode.Descendants("UnitDescription").Any() ? swarmNode.Descendants("UnitDescription").First().Value : String.Empty;
 
                 wave.Swarms.Enqueue(new Swarm
                         {
                             CreepLoadOut = new CreepLoadout
                                 {
                                     Creep = creep,
-                                    SpawnLocation = GetSpawnPoint(spawnLocation)
+                                    SpawnLocation = GetSpawnPoint(spawnLocation),
                                 },
                             Quantity = quantity,
                             TimeInBetweenCreeps = timeInBetweenCreeps,
-                            TimeToNextSwarm = timeToNextSwarm
+                            TimeToNextSwarm = timeToNextSwarm,
+                            ShowUnitDescription = showUnitDescription,
+                            UnitDescription = unitDescription
                         });
             }
             wave.WaveNumber = waveNumber;
