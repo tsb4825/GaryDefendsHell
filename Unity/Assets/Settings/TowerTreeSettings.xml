@@ -1,14 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TowerTree>
-  <Base Name="Homing" GoldCost="100">
-  	<Child Name="Normal" GoldCost="100"/>
+  <Base Name="ImpPoopLauncher" Type="Wrath" GoldCost="120">
+    <Child Name="SinHoming" GoldCost="140">
+      <Child Name="Judgement" GoldCost="160"/>
+    </Child>
   </Base>
-  <Base Name="AOE" GoldCost="110">
+  <Base Name="FoldingChair" Type="Sloth" GoldCost="120">
+    <Child Name="Couch" GoldCost="140">
+      <Child Name="LazyBoy" GoldCost="160"/>
+    </Child>
   </Base>
-  <Base Name="Normal" GoldCost="120">
+  <Base Name="Bestiary" Type="Envy" GoldCost="120">
+    <Child Name="Laboratory" GoldCost="140">
+      <Child Name="Dungeon" GoldCost="160"/>  
+    </Child>
   </Base>
-  <Base Name="StunAndDrain" GoldCost="120">
+  <Base Name="Woman" Type="Lust" GoldCost="120">
+    <Child Name="Man" GoldCost="140">
+      <Child Name="Goat" GoldCost="160"/>
+    </Child>
   </Base>
-  <Base Name="Slow" GoldCost="120">
+  <Base Name="Bassist" Type="Pride" GoldCost="120">
+    <Child Name="Drummer" GoldCost="140">
+      <Child Name="Guitar" GoldCost="160"/>
+    </Child>
   </Base>
 </TowerTree>

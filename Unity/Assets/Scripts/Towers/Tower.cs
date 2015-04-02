@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Objects;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -75,18 +77,38 @@ public abstract class Tower : MonoBehaviour
     {
         switch (towerType)
         {
-            case TowerTypes.Normal:
-                return "Normal";
-            case TowerTypes.Homing:
+            case TowerTypes.ImpPoopLauncher:
                 return "Homing";
-            case TowerTypes.AOE:
-                return "Sphere";
-            case TowerTypes.Barracks:
+            case TowerTypes.SinHoming:
+                return "Homing";
+            case TowerTypes.Judgement:
+                return "Homing";
+            case TowerTypes.Bestiary:
                 return "Barracks";
-            case TowerTypes.StunAndDrain:
-                return "Drain";
+            case TowerTypes.Laboratory:
+                return "Barracks";
+            case TowerTypes.Dungeon:
+                return "Barracks";
+            case TowerTypes.FoldingChair:
+                return "Sphere";
+            case TowerTypes.Couch:
+                return "Sphere";
+            case TowerTypes.LazyBoy:
+                return "Sphere";
+            case TowerTypes.Woman:
+                return "Slow";
+            case TowerTypes.Man:
+                return "Slow";
+            case TowerTypes.Goat:
+                return "Slow";
+            case TowerTypes.Bassist:
+                return "Slow";
+            case TowerTypes.Drummer:
+                return "Slow";
+            case TowerTypes.Guitar:
+                return "Slow";
             default:
-                throw new UnityException("TowerType not supported.");
+                throw new UnityException("TowerType not supported: " + towerType);
         }
     }
 
@@ -94,16 +116,36 @@ public abstract class Tower : MonoBehaviour
     {
         switch (towerType)
         {
-            case TowerTypes.Normal:
-                return "NormalTower";
-            case TowerTypes.Homing:
-                return "HomingTower";
-            case TowerTypes.AOE:
-                return "AOETower";
-            case TowerTypes.Barracks:
-                return "BarracksTower";
-            case TowerTypes.StunAndDrain:
-                return "DrainTower";
+            case TowerTypes.ImpPoopLauncher:
+                return "ImpPoopLauncherTower";
+            case TowerTypes.SinHoming:
+                return "SinHomingTower";
+            case TowerTypes.Judgement:
+                return "JudgementTower";
+            case TowerTypes.Bestiary:
+                return "BestiaryTower";
+            case TowerTypes.Laboratory:
+                return "LaboratoryTower";
+            case TowerTypes.Dungeon:
+                return "DungeonTower";
+            case TowerTypes.FoldingChair:
+                return "FoldingChairTower";
+            case TowerTypes.Couch:
+                return "CouchTower";
+            case TowerTypes.LazyBoy:
+                return "LazyBoyTower";
+            case TowerTypes.Woman:
+                return "WomanTower";
+            case TowerTypes.Man:
+                return "ManTower";
+            case TowerTypes.Goat:
+                return "GoatTower";
+            case TowerTypes.Bassist:
+                return "BassistTower";
+            case TowerTypes.Drummer:
+                return "DrummerTower";
+            case TowerTypes.Guitar:
+                return "GuitarTower";
             default:
                 throw new UnityException("TowerType not supported.");
         }

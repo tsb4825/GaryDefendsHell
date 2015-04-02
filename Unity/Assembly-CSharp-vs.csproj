@@ -53,9 +53,14 @@
      <Compile Include="Assets\Scripts\CreditsScript.cs" />
      <Compile Include="Assets\Scripts\CreepScript.cs" />
      <Compile Include="Assets\Scripts\CreepWaveObjects.cs" />
+     <Compile Include="Assets\Scripts\Enums\TowerTreeTypes.cs" />
+     <Compile Include="Assets\Scripts\Enums\TowerTypes.cs" />
+     <Compile Include="Assets\Scripts\GuiDisplayScript.cs" />
      <Compile Include="Assets\Scripts\HealSkillScript.cs" />
      <Compile Include="Assets\Scripts\LevelWavesLoadOut.cs" />
      <Compile Include="Assets\Scripts\MapSelectionScript.cs" />
+     <Compile Include="Assets\Scripts\Objects\TowerSettings.cs" />
+     <Compile Include="Assets\Scripts\Objects\TreeNode.cs" />
      <Compile Include="Assets\Scripts\PathingScript.cs" />
      <Compile Include="Assets\Scripts\PlayerMenuScript.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
@@ -76,7 +81,6 @@
      <Compile Include="Assets\Scripts\Towers\StunDrainTowerScript.cs" />
      <Compile Include="Assets\Scripts\Towers\Tower.cs" />
      <Compile Include="Assets\Scripts\Towers\TowerBaseScript.cs" />
-     <Compile Include="Assets\Scripts\Towers\TowerSettings.cs" />
      <Compile Include="Assets\Scripts\Towers\TowerTreeScript.cs" />
      <Compile Include="Assets\Scripts\UtilityFunctions.cs" />
      <Compile Include="Assets\Scripts\WaveScript.cs" />

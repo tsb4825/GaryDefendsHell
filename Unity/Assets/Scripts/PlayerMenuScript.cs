@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerMenuScript : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerMenuScript : MonoBehaviour
     private float ButtonX = Screen.width * .8f + (Screen.width * .2f / 2f) - ButtonWidth;
     private GameState GameState;
     private bool IsGameStarted;
-    private bool ShowConfirmWindow;
+    private GUI.WindowFunction confirmModal;
 
     void OnGUI()
     {
@@ -57,35 +58,55 @@ public class PlayerMenuScript : MonoBehaviour
 
         if (GUI.Button(new Rect(ButtonX, 280f - (ButtonHeight / 2f), ButtonWidth, ButtonHeight), "Restart"))
         {
-            ShowConfirmWindow = true;
+            confirmModal = RestartLevel;
             Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         }
 
-        if (ShowConfirmWindow)
+        if (GUI.Button(new Rect(ButtonX, 330f - (ButtonHeight / 2f), ButtonWidth, ButtonHeight), "Quit"))
         {
-            DrawModalWindow();
+            confirmModal = QuitLevel;
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+        }
+
+        if (confirmModal != null)
+        {
+            DrawModalWindow(confirmModal);
         }
     }
 
-    void DrawModalWindow()
+    void DrawModalWindow(GUI.WindowFunction confirmModal)
     {
-        GUI.ModalWindow(0, new Rect(Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), RestartLevel, "Are you sure?");
+        GUI.ModalWindow(0, new Rect(Screen.width / 2 - 200, Screen.height / 2 - 75, 400, 150), confirmModal, "Are you sure?");
     }
 
     void RestartLevel(int windowID)
     {
-        GUI.Label(new Rect(50, 50, 300, 30), "Are you sure you want to restart the level?");
-        if (GUI.Button(new Rect(140, 80, 60, 30), "Yes"))
-        {
-            ShowConfirmWindow = false;
-            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-            Application.LoadLevel("Level" + FindObjectsOfType<PlayerScript>()[0].LevelNumber);
-        }
-        if (GUI.Button(new Rect(210, 80, 60, 30), "No"))
-        {
-            ShowConfirmWindow = false;
-            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-        }
+        GuiDisplayScript.ConfirmModal("Are you sure you want to restart the level?",
+            () => {
+                confirmModal = null;
+                Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+                Application.LoadLevel("Level" + FindObjectsOfType<PlayerScript>()[0].LevelNumber);
+            },
+            () => {
+                confirmModal = null;
+                Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+            });
+    }
+
+    void QuitLevel(int windowID)
+    {
+        GuiDisplayScript.ConfirmModal("Are you sure you want to quit the level?",
+            () =>
+            {
+                confirmModal = null;
+                Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+                Application.LoadLevel("Map");
+            },
+            () =>
+            {
+                confirmModal = null;
+                Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+            });
     }
 }
 

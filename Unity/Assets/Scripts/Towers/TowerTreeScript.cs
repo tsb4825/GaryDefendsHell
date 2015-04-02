@@ -4,6 +4,8 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Objects;
 
 public class TowerTreeScript : MonoBehaviour
 {
@@ -24,7 +26,7 @@ public class TowerTreeScript : MonoBehaviour
         {
             List<TreeNode> treeNodes = new List<TreeNode>();
             AddRootAndChildren(baseTower, treeNodes);
-            TreeLists.Add((TowerTreeTypes)Enum.Parse(typeof(TowerTreeTypes), baseTower.Attribute("Name").Value, true), treeNodes);
+            TreeLists.Add((TowerTreeTypes)Enum.Parse(typeof(TowerTreeTypes), baseTower.Attribute("Type").Value, true), treeNodes);
         }
         UtilityFunctions.DebugMessage(TreeLists.Count() + " base towers found.");
     }
@@ -44,8 +46,11 @@ public class TowerTreeScript : MonoBehaviour
     {
         UtilityFunctions.DebugMessage("TreeList Key Count: " + TreeLists.Count);
         List<TreeNode> children = null;
+        Debug.Log(towerType);
         if (towerType != TowerTypes.Unknown)
         {
+            Debug.Log(TreeLists.First(x => x.Value.Any(y => y.TowerType == towerType)).Value);
+            //Debug.Log();
             children = TreeLists.First(x => x.Value.Any(y => y.TowerType == towerType)).Value.First(z => z.TowerType == towerType).Children;
         }
         else
@@ -57,57 +62,8 @@ public class TowerTreeScript : MonoBehaviour
             }
         }
         return (children != null)
-    ? children.Select(x => new TowerSettings { TowerType = x.TowerType, GoldCost = x.GoldCost }).ToList()
-        : null;
+            ? children.Select(x => new TowerSettings { TowerType = x.TowerType, GoldCost = x.GoldCost }).ToList()
+            : null;
     }
 }
 
-public class TreeNode
-{
-    private List<TreeNode> _children;
-    private TowerTypes _towerType;
-    private int _goldCost;
-
-    public TreeNode(TowerTypes towerType, int goldCost)
-    {
-        _children = new List<TreeNode>();
-        _towerType = towerType;
-        _goldCost = goldCost;
-    }
-
-    public TowerTypes TowerType { get { return _towerType; } }
-
-    public int GoldCost { get { return _goldCost; } }
-
-    public List<TreeNode> Children
-    {
-        get { return _children; }
-    }
-
-    public void AddChild(TreeNode treeNode)
-    {
-        _children.Add(treeNode);
-    }
-}
-
-public enum TowerTypes
-{
-    Unknown,
-    AOE,
-    Normal,
-    Homing,
-    Barracks,
-    StunAndDrain,
-    Slow
-}
-
-public enum TowerTreeTypes
-{
-    Unknown,
-    AOE,
-    Normal,
-    Homing,
-    Barracks,
-    StunAndDrain,
-    Slow
-}

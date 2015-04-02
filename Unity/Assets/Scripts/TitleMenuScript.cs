@@ -77,16 +77,13 @@ public class TitleMenuScript : MonoBehaviour
 
     void ResetSaveData(int windowID)
     {
-        GUI.Label(new Rect(50, 50, 300, 30), "Are you sure you want to reset your save data?");
-        if (GUI.Button(new Rect(140, 80, 60, 30), "Yes"))
-        {
-            PlayerPrefs.DeleteAll();
-            ShowConfirmWindow = false;
-        }
-        if (GUI.Button(new Rect(210, 80, 60, 30), "No"))
-        {
-            ShowConfirmWindow = false;
-        }
+        GuiDisplayScript.ConfirmModal("Are you sure you want to reset your save data?", 
+            () =>
+                {
+                    PlayerPrefs.DeleteAll();
+                    ShowConfirmWindow = false;
+                },
+            () => ShowConfirmWindow = false);
     }
 
     void Update()

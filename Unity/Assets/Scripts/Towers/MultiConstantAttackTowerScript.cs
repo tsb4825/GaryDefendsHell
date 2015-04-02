@@ -7,7 +7,6 @@ public class MultiConstantAttackTowerScript : Tower
 {
     public int NumberOfProjectiles;
     public Transform Projectile;
-    public float TowerRange;
 
     public float PathWidth;
 
@@ -17,7 +16,6 @@ public class MultiConstantAttackTowerScript : Tower
     {
         // Get all paths
         var paths = PathingScript.BuildAIPaths();
-
         // Find all intersections of paths, remove duplicates
         List<ActualVector> collisionPaths = new List<ActualVector>();
         foreach (var path in paths)
@@ -28,6 +26,8 @@ public class MultiConstantAttackTowerScript : Tower
                 {
                     Vector3 nodePath = UtilityFunctions.UseUnitZPosition(transform, path[index]) - UtilityFunctions.UseUnitZPosition(transform, path[index - 1]);
                     RaycastHit2D[] hits = Physics2D.RaycastAll(UtilityFunctions.UseUnitZPosition(transform, path[index - 1]), nodePath, nodePath.magnitude);
+                    Debug.Log(hits.Any(x => x.collider == transform.GetComponent<Collider2D>()));
+                    Debug.Log(transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]));
                     if (hits.Any(x => x.collider == transform.GetComponent<Collider2D>()) || transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]))
                     {
                         var collisionPoint1 = hits.Any(x => x.collider == transform.GetComponent<Collider2D>()) ? hits.First(y => y.collider == transform.GetComponent<Collider2D>()).point : (Vector2?)null;
