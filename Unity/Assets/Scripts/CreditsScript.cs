@@ -15,11 +15,9 @@ public class CreditsScript : MonoBehaviour {
         var creditsText = GetCreditsText();
         Debug.Log(creditsText);
         creditsArray = creditsText;
-        int index = 0;
-        foreach(var credit in creditsArray)
+        for(var index = 0; index < creditsArray.Count; index++)
         {
             creditsRectangle.Add(new Rect(new Rect(Screen.width / 2 - 150, Screen.height + (30 * index), 300, 100)));
-            index++;
         }
 	}
 

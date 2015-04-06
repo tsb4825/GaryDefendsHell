@@ -1,28 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TowerTree>
-  <Base Name="ImpPoopLauncher" Type="Wrath" GoldCost="120">
-    <Child Name="SinHoming" GoldCost="140">
-      <Child Name="Judgement" GoldCost="160"/>
+  <Base Name="ImpPoopLauncher" Type="Wrath" GoldCost="120" Description="Imp Poop Launcher">
+    <Child Name="SinHoming" GoldCost="140" Description="Sin Homing Tower">
+      <Child Name="Judgement" GoldCost="160" Description="Judgement Tower"/>
     </Child>
   </Base>
-  <Base Name="FoldingChair" Type="Sloth" GoldCost="120">
-    <Child Name="Couch" GoldCost="140">
-      <Child Name="LazyBoy" GoldCost="160"/>
+  <Base Name="FoldingChair" Type="Sloth" GoldCost="120" Description="Folding Chair Fat Man">
+    <Child Name="Couch" GoldCost="140" Description="Couch Fat Man">
+      <Child Name="LazyBoy" GoldCost="160" Description="LazyBoy Fat Man"/>
     </Child>
   </Base>
-  <Base Name="Bestiary" Type="Envy" GoldCost="120">
-    <Child Name="Laboratory" GoldCost="140">
-      <Child Name="Dungeon" GoldCost="160"/>  
+  <Base Name="Bestiary" Type="Envy" GoldCost="120" Description="Bestiary">
+    <Child Name="Laboratory" GoldCost="140" Description="Laboratory">
+      <Child Name="Dungeon" GoldCost="160" Description="Dungeon"/>  
     </Child>
   </Base>
-  <Base Name="Woman" Type="Lust" GoldCost="120">
-    <Child Name="Man" GoldCost="140">
-      <Child Name="Goat" GoldCost="160"/>
+  <Base Name="Woman" Type="Lust" GoldCost="120" Description="Woman">
+    <Child Name="Man" GoldCost="140" Description="Man">
+      <Child Name="Goat" GoldCost="160" Description="Goat"/>
     </Child>
   </Base>
-  <Base Name="Bassist" Type="Pride" GoldCost="120">
-    <Child Name="Drummer" GoldCost="140">
-      <Child Name="Guitar" GoldCost="160"/>
+  <Base Name="Bassist" Type="Pride" GoldCost="120" Description="Bassist">
+    <Child Name="Drummer" GoldCost="140" Description="Drummer">
+      <Child Name="Guitar" GoldCost="160" Description="Guitar"/>
+    </Child>
+  </Base>
+  <Base Name="Colonel" Type="Gluttony" GoldCost="120" Description="Colonel">
+    <Child Name="Ronnie" GoldCost="140" Description="Ronnie">
+      <Child Name="LardOMatic" GoldCost="160" Description="LardOMatic"/>
+    </Child>
+  </Base>
+  <Base Name="Hail" Type="Greed" GoldCost="120" Description="Hail Tower">
+    <Child Name="BagsOfMoney" GoldCost="140" Description="Bags Of Money Tower">
+      <Child Name="Catapult" GoldCost="160" Description="Catapult Tower"/>
     </Child>
   </Base>
 </TowerTree>

@@ -10,5 +10,6 @@ namespace Assets.Scripts.Objects
     {
         public TowerTypes TowerType;
         public int GoldCost;
+        public string Description;
     }
 }

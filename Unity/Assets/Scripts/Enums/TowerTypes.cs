@@ -22,6 +22,12 @@ namespace Assets.Scripts.Enums
         LazyBoy,
         Bassist,
         Drummer,
-        Guitar
+        Guitar,
+        Colonel,
+        Ronnie,
+        LardOMatic,
+        Hail,
+        BagsOfMoney,
+        Catapult
     }
 }

@@ -43,8 +43,8 @@ public abstract class Tower : MonoBehaviour
         for (var index = 0; index < TowerChoices.Count; index++)
         {
             if (GUI.Button(
-    new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth * (index + 1)) + (ButtonWidth * index), guiY - (BoxHeight / 2) + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
-    (Texture)Resources.Load(GetTextureNameOfIcon(TowerChoices[index].TowerType))))
+                new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth * (index + 1)) + (ButtonWidth * index), guiY - (BoxHeight / 2) + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
+                new GUIContent((Texture)Resources.Load(GetTextureNameOfIcon(TowerChoices[index].TowerType)), "Hello")))
             {
                 if (player.Gold >= TowerChoices[index].GoldCost)
                 {
@@ -62,7 +62,7 @@ public abstract class Tower : MonoBehaviour
     new Rect(point.x - (BoxWidth / 2), guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.texture.height, BoxWidth, BoxHeight), "");
             if (GUI.Button(
     new Rect(point.x - (BoxWidth / 2) + ButtonSpacingWidth, guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.texture.height + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
-                (Texture)Resources.Load("Sell")))
+                new GUIContent((Texture)Resources.Load("Sell"), "Sell")))
             {
                 PlayerSettings playerSettings = GameObject.FindObjectOfType<PlayerScript>().GetPlayerSettings();
                 player.AddGold(Mathf.FloorToInt(GoldCost * playerSettings.SellRate));
@@ -71,6 +71,8 @@ public abstract class Tower : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+
+        GUI.Label(new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth), guiY - (BoxHeight / 2) + ButtonSpacingHeight - 40, ButtonWidth, ButtonHeight), GUI.tooltip);
     }
 
     private string GetTextureNameOfIcon(TowerTypes towerType)
@@ -107,6 +109,18 @@ public abstract class Tower : MonoBehaviour
                 return "Slow";
             case TowerTypes.Guitar:
                 return "Slow";
+            case TowerTypes.Colonel:
+                return "Sphere";
+            case TowerTypes.Ronnie:
+                return "Sphere";
+            case TowerTypes.LardOMatic:
+                return "Sphere";
+            case TowerTypes.Hail:
+                return "Homing";
+            case TowerTypes.BagsOfMoney:
+                return "Homing";
+            case TowerTypes.Catapult:
+                return "Homing";
             default:
                 throw new UnityException("TowerType not supported: " + towerType);
         }
@@ -146,6 +160,18 @@ public abstract class Tower : MonoBehaviour
                 return "DrummerTower";
             case TowerTypes.Guitar:
                 return "GuitarTower";
+            case TowerTypes.Colonel:
+                return "ColonelTower";
+            case TowerTypes.Ronnie:
+                return "RonnieTower";
+            case TowerTypes.LardOMatic:
+                return "LardOMaticTower";
+            case TowerTypes.Hail:
+                return "HailTower";
+            case TowerTypes.BagsOfMoney:
+                return "BagsOfMoneyTower";
+            case TowerTypes.Catapult:
+                return "CatapultTower";
             default:
                 throw new UnityException("TowerType not supported.");
         }

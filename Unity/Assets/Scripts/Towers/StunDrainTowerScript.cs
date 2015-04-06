@@ -42,7 +42,7 @@ public class StunDrainTowerScript :  Tower {
                 target.GetComponent<CreepScript>().TakeDamage(DrainDamage);
             }
             NextDrainTime = Time.time + DrainSpeed;
-            DrainTimeCount = DrainTimeCount += 1;
+            DrainTimeCount += 1;
         }
         base.Update();
     }

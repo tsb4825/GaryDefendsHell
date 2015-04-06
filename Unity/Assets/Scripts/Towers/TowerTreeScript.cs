@@ -33,7 +33,10 @@ public class TowerTreeScript : MonoBehaviour
 
     private TreeNode AddRootAndChildren(XElement root, List<TreeNode> treeNodes)
     {
-        TreeNode rootNode = new TreeNode((TowerTypes)Enum.Parse(typeof(TowerTypes), root.Attribute("Name").Value, true), int.Parse(root.Attribute("GoldCost").Value));
+        TreeNode rootNode = new TreeNode((TowerTypes)Enum.Parse(typeof(TowerTypes), 
+                                        root.Attribute("Name").Value, true), 
+                                        int.Parse(root.Attribute("GoldCost").Value),
+                                        root.Attribute("Description").Value);
         treeNodes.Add(rootNode);
         foreach (XElement child in root.Elements("Child"))
         {
