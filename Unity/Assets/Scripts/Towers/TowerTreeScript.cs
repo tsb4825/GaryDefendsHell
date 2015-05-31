@@ -65,7 +65,7 @@ public class TowerTreeScript : MonoBehaviour
             }
         }
         return (children != null)
-            ? children.Select(x => new TowerSettings { TowerType = x.TowerType, GoldCost = x.GoldCost }).ToList()
+            ? children.Select(x => new TowerSettings { TowerType = x.TowerType, GoldCost = x.GoldCost, Description = x.Description }).ToList()
             : null;
     }
 }

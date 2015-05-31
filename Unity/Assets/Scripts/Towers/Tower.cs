@@ -21,9 +21,17 @@ public abstract class Tower : MonoBehaviour
     const float ButtonHeight = 30;
     const float ButtonSpacingWidth = 6;
     const float ButtonSpacingHeight = 6;
+    public GUIStyle tooltipStyle;
+
+    void Start()
+    {
+        tooltipStyle = new GUIStyle();
+        tooltipStyle.normal.textColor = Color.black;
+    }
 
     void OnGUI()
     {
+        GUI.backgroundColor = Color.black;
         if (IsTowerSelected)
         {
             if (TowerChoices != null)
@@ -42,9 +50,11 @@ public abstract class Tower : MonoBehaviour
 
         for (var index = 0; index < TowerChoices.Count; index++)
         {
+            var tooltip = new GUIStyle();
+            tooltip.normal.textColor = Color.black;
             if (GUI.Button(
                 new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth * (index + 1)) + (ButtonWidth * index), guiY - (BoxHeight / 2) + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
-                new GUIContent((Texture)Resources.Load(GetTextureNameOfIcon(TowerChoices[index].TowerType)), "Hello")))
+                new GUIContent((Texture)Resources.Load(GetTextureNameOfIcon(TowerChoices[index].TowerType)), TowerChoices[index].Description)))
             {
                 if (player.Gold >= TowerChoices[index].GoldCost)
                 {
@@ -59,9 +69,9 @@ public abstract class Tower : MonoBehaviour
         if (TowerType != TowerTypes.Unknown)
         {
             GUI.Box(
-    new Rect(point.x - (BoxWidth / 2), guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.texture.height, BoxWidth, BoxHeight), "");
+                new Rect(point.x - (BoxWidth / 2), guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.textureRect.height * transform.localScale.y, BoxWidth, BoxHeight), "");
             if (GUI.Button(
-    new Rect(point.x - (BoxWidth / 2) + ButtonSpacingWidth, guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.texture.height + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
+                new Rect(point.x - (BoxWidth / 2) + ButtonSpacingWidth, guiY + (BoxHeight / 2) + transform.GetComponent<SpriteRenderer>().sprite.textureRect.height * transform.localScale.y + ButtonSpacingHeight, ButtonWidth, ButtonHeight),
                 new GUIContent((Texture)Resources.Load("Sell"), "Sell")))
             {
                 PlayerSettings playerSettings = GameObject.FindObjectOfType<PlayerScript>().GetPlayerSettings();
@@ -72,7 +82,7 @@ public abstract class Tower : MonoBehaviour
             }
         }
 
-        GUI.Label(new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth), guiY - (BoxHeight / 2) + ButtonSpacingHeight - 40, ButtonWidth, ButtonHeight), GUI.tooltip);
+        GUI.Label(new Rect(point.x - (BoxWidth / 2) + (ButtonSpacingWidth), guiY - (BoxHeight / 2) + ButtonSpacingHeight - 40, ButtonWidth, ButtonHeight), GUI.tooltip, tooltipStyle);
     }
 
     private string GetTextureNameOfIcon(TowerTypes towerType)

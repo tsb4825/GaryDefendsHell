@@ -26,8 +26,6 @@ public class MultiConstantAttackTowerScript : Tower
                 {
                     Vector3 nodePath = UtilityFunctions.UseUnitZPosition(transform, path[index]) - UtilityFunctions.UseUnitZPosition(transform, path[index - 1]);
                     RaycastHit2D[] hits = Physics2D.RaycastAll(UtilityFunctions.UseUnitZPosition(transform, path[index - 1]), nodePath, nodePath.magnitude);
-                    Debug.Log(hits.Any(x => x.collider == transform.GetComponent<Collider2D>()));
-                    Debug.Log(transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]));
                     if (hits.Any(x => x.collider == transform.GetComponent<Collider2D>()) || transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]))
                     {
                         var collisionPoint1 = hits.Any(x => x.collider == transform.GetComponent<Collider2D>()) ? hits.First(y => y.collider == transform.GetComponent<Collider2D>()).point : (Vector2?)null;
@@ -42,8 +40,6 @@ public class MultiConstantAttackTowerScript : Tower
                                 StartsInsideCollider = transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]),
                                 EndsInsideCollider = transform.GetComponent<Collider2D>().OverlapPoint(path[index])
                             });
-                            Debug.Log("Origin: " + path[index - 1] + "Path: " + nodePath + "Magnitude: " + nodePath.magnitude + "StartsInsideCollider " + transform.GetComponent<Collider2D>().OverlapPoint(path[index - 1]) + "EndsInsideCollider " + transform.GetComponent<Collider2D>().OverlapPoint(path[index]));
-                            //Debug.DrawRay(path[index - 1], nodePath, new Color(Random.Range(0f, 1f), Random.Range(0f,1f),Random.Range(0f,1f)));
                         }
                     }
                 }
@@ -72,8 +68,6 @@ public class MultiConstantAttackTowerScript : Tower
                 collisionPaths[pathIndex].Direction = collision - collisionPaths[pathIndex].Origin;
                 collisionPaths[pathIndex].Magnitude = (collision - collisionPaths[pathIndex].Origin).magnitude;
             }
-            Debug.Log("New Origin: " + collisionPaths[pathIndex].Origin + "New Path: " + collisionPaths[pathIndex].Direction + "New Magnitude: " + collisionPaths[pathIndex].Magnitude);
-            //Debug.DrawRay(collisionPaths[pathIndex].Origin, collisionPaths[pathIndex].Direction, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
         }
 
         CollisionPaths = collisionPaths;
@@ -92,18 +86,15 @@ public class MultiConstantAttackTowerScript : Tower
             for (var pathIndex = 0; pathIndex < CollisionPaths.Count() && selectedPath == null; pathIndex++)
             {
                 var currentPercentage = CollisionPaths[pathIndex].Magnitude / sumMagnitudes * 100;
-                Debug.Log("Random Value: " + randomValue + " Vector percentage : " + currentPercentage + "Percentage Run Through : " + percentageTotalRunThrough);
                 if (randomValue <= (currentPercentage + percentageTotalRunThrough))
                 {
                     selectedPath = CollisionPaths[pathIndex];
                 }
                 percentageTotalRunThrough += currentPercentage;
             }
-            Debug.Log("Selected Path: " + selectedPath.Origin);
             Debug.DrawRay(selectedPath.Origin, selectedPath.Direction, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
 
             Vector3 endpoint = GetRandomEndPoint(selectedPath);
-            Debug.Log("Random Point: " + endpoint);
             Transform projectile = (Transform)Instantiate(Projectile, transform.position, Quaternion.identity);
             projectile.GetComponent<ConstantAttackProjectileScript>().TargetLocation = endpoint;
         }

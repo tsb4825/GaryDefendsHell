@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\CreepWaveObjects.cs" />
     <Compile Include="Assets\Scripts\Enums\TowerTreeTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\TowerTypes.cs" />
+    <Compile Include="Assets\Scripts\FadeInScript.cs" />
     <Compile Include="Assets\Scripts\GuiDisplayScript.cs" />
     <Compile Include="Assets\Scripts\HealSkillScript.cs" />
     <Compile Include="Assets\Scripts\LevelWavesLoadOut.cs" />
