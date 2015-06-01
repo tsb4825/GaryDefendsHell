@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Objects;
 
 public class ComicCelScript : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ComicCelScript : MonoBehaviour
     void Start()
     {
         positionIndex = 0;
-        transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("StoryBoardExample");
+        transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PreLevelMaps.GetPreLevelTexture());
         ScreenPositions = new List<Vector3>{ 
 			new Vector3(-11.7f, 5.0f, -10f), 
 			new Vector3(11.4f, 5.0f, -10f), 
@@ -38,7 +39,7 @@ public class ComicCelScript : MonoBehaviour
             WaitingOnMouseClick = false;
             if (positionIndex >= 3)
             {
-                // go to level
+                Application.LoadLevel(string.Format("Level{0}", PreLevelMaps.GetLevel()));
             }
             else
             {

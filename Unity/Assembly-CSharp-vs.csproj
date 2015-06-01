@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\HealSkillScript.cs" />
      <Compile Include="Assets\Scripts\LevelWavesLoadOut.cs" />
      <Compile Include="Assets\Scripts\MapSelectionScript.cs" />
+     <Compile Include="Assets\Scripts\Objects\PreLevelMaps.cs" />
      <Compile Include="Assets\Scripts\Objects\TowerSettings.cs" />
      <Compile Include="Assets\Scripts\Objects\TreeNode.cs" />
      <Compile Include="Assets\Scripts\PathingScript.cs" />

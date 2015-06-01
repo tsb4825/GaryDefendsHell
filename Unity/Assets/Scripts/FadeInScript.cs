@@ -7,6 +7,7 @@ public class FadeInScript : MonoBehaviour
     public float animationSpeed;
     public float waitSeconds;
     float loadTime;
+    public string nextLevel;
     
 
     // Use this for initialization
@@ -28,7 +29,7 @@ public class FadeInScript : MonoBehaviour
         {
             if (Time.time > loadTime || Input.anyKey)
             {
-                Application.LoadLevel("MainScreen");
+                Application.LoadLevel(nextLevel);
             }
         }
     }

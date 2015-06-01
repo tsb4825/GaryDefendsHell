@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using Assets.Scripts.Objects;
 
 public class MapSelectionScript : MonoBehaviour
 {
@@ -72,9 +73,20 @@ public class MapSelectionScript : MonoBehaviour
         float guiY = Screen.height - screenPosition.y;
         GUI.BeginGroup(new Rect(screenPosition.x - 50f, guiY - 75f, 100f, 100f));
         GUI.Box(new Rect(0, 0, 100f, 100f), "");
-        if (GUI.Button(new Rect(10f, 10f, 50f, 50f), "Level " + LevelSelected.name.Replace("Level", "")))
+        int level = int.Parse(LevelSelected.name.Replace("Level", ""));
+        if (GUI.Button(new Rect(10f, 10f, 50f, 50f), "Level " + level))
         {
-            Application.LoadLevel(LevelSelected.name);
+            if (PreLevelMaps.DoesPreLevelExist(level))
+            {
+                Debug.Log("Loading PreLevelStoryBoard");
+                PreLevelMaps.SetLevel(level);
+                Application.LoadLevel("PreLevelStoryBoard");
+            }
+            else
+            {
+                Debug.Log("not Loading Pre Level");
+                Application.LoadLevel(LevelSelected.name);
+            }
         }
         GUI.EndGroup();
     }
